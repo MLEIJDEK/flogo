@@ -1,0 +1,811 @@
+{
+  "imports": [
+    "github.com/project-flogo/flow",
+    "github.com/tibco/flogo-general/src/app/General/activity/rest",
+    "github.com/project-flogo/contrib/activity/actreturn",
+    "rest_1 github.com/tibco/flogo-general/src/app/General/trigger/rest"
+  ],
+  "name": "MLE_CountryFlogo",
+  "description": "",
+  "version": "1.0.0",
+  "type": "flogo:app",
+  "appModel": "1.1.1",
+  "tags": [],
+  "triggers": [
+    {
+      "ref": "#rest_1",
+      "name": "tibco-wi-rest",
+      "description": "Simple REST Trigger",
+      "settings": {
+        "port": 9999,
+        "APISpecUpdate": false,
+        "swagger": "",
+        "swaggerVersion": "v2",
+        "apiVersion": "1.0.0",
+        "secureConnection": false,
+        "serverKey": "",
+        "caCertificate": ""
+      },
+      "id": "ReceiveHTTPMessage",
+      "handlers": [
+        {
+          "description": "",
+          "settings": {
+            "APISpecPath": "",
+            "Method": "GET",
+            "reqType": "application/json",
+            "Path": "/country/{code}",
+            "OutputValidation": false
+          },
+          "action": {
+            "ref": "github.com/project-flogo/flow",
+            "settings": {
+              "flowURI": "res://flow:getCountryInfo"
+            },
+            "input": {
+              "pathParams": "=$.pathParams"
+            },
+            "output": {
+              "responseBody": "=$.responseBody"
+            }
+          },
+          "reply": {
+            "code": 200,
+            "configureResponseCodes": true,
+            "message": {}
+          },
+          "schemas": {
+            "reply": {
+              "data": "schema://CountryResponse",
+              "responseBody": {
+                "type": "json",
+                "value": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}",
+                "fe_metadata": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}",
+                "feSchemaMap": {}
+              },
+              "responseCodesSchema": {
+                "type": "json",
+                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"string\"},\"responseType\":{\"type\":\"string\"},\"responseSchema\":{\"type\":\"string\"},\"responseHeaders\":{\"type\":\"string\"}}}}",
+                "fe_metadata": "[{\"code\":\"200\",\"responseType\":\"object\",\"responseSchema\":\"[\\r\\n    {\\r\\n        \\\"name\\\": {\\r\\n            \\\"common\\\": \\\"United Kingdom\\\",\\r\\n            \\\"official\\\": \\\"United Kingdom of Great Britain and Northern Ireland\\\",\\r\\n            \\\"nativeName\\\": {\\r\\n                \\\"eng\\\": {\\r\\n                    \\\"official\\\": \\\"United Kingdom of Great Britain and Northern Ireland\\\",\\r\\n                    \\\"common\\\": \\\"United Kingdom\\\"\\r\\n                }\\r\\n            }\\r\\n        },\\r\\n        \\\"tld\\\": [\\r\\n            \\\".uk\\\"\\r\\n        ],\\r\\n        \\\"cca2\\\": \\\"GB\\\",\\r\\n        \\\"ccn3\\\": \\\"826\\\",\\r\\n        \\\"cca3\\\": \\\"GBR\\\",\\r\\n        \\\"cioc\\\": \\\"GBR\\\",\\r\\n        \\\"independent\\\": true,\\r\\n        \\\"status\\\": \\\"officially-assigned\\\",\\r\\n        \\\"unMember\\\": true,\\r\\n        \\\"currencies\\\": {\\r\\n            \\\"GBP\\\": {\\r\\n                \\\"name\\\": \\\"British pound\\\",\\r\\n                \\\"symbol\\\": \\\"£\\\"\\r\\n            }\\r\\n        },\\r\\n        \\\"idd\\\": {\\r\\n            \\\"root\\\": \\\"+4\\\",\\r\\n            \\\"suffixes\\\": [\\r\\n                \\\"4\\\"\\r\\n            ]\\r\\n        },\\r\\n        \\\"capital\\\": [\\r\\n            \\\"London\\\"\\r\\n        ],\\r\\n        \\\"altSpellings\\\": [\\r\\n            \\\"GB\\\",\\r\\n            \\\"UK\\\",\\r\\n            \\\"Great Britain\\\"\\r\\n        ],\\r\\n        \\\"region\\\": \\\"Europe\\\",\\r\\n        \\\"subregion\\\": \\\"Northern Europe\\\",\\r\\n        \\\"languages\\\": {\\r\\n            \\\"eng\\\": \\\"English\\\"\\r\\n        },\\r\\n        \\\"translations\\\": {\\r\\n            \\\"ara\\\": {\\r\\n                \\\"official\\\": \\\"المملكة المتحدة لبريطانيا العظمى وايرلندا الشمالية\\\",\\r\\n                \\\"common\\\": \\\"المملكة المتحدة\\\"\\r\\n            },\\r\\n            \\\"ces\\\": {\\r\\n                \\\"official\\\": \\\"Spojené království Velké Británie a Severního Irska\\\",\\r\\n                \\\"common\\\": \\\"Spojené království\\\"\\r\\n            },\\r\\n            \\\"cym\\\": {\\r\\n                \\\"official\\\": \\\"United Kingdom of Great Britain and Northern Ireland\\\",\\r\\n                \\\"common\\\": \\\"United Kingdom\\\"\\r\\n            },\\r\\n            \\\"deu\\\": {\\r\\n                \\\"official\\\": \\\"Vereinigtes Königreich Großbritannien und Nordirland\\\",\\r\\n                \\\"common\\\": \\\"Vereinigtes Königreich\\\"\\r\\n            },\\r\\n            \\\"est\\\": {\\r\\n                \\\"official\\\": \\\"Suurbritannia ja Põhja-Iiri Ühendkuningriik\\\",\\r\\n                \\\"common\\\": \\\"Suurbritannia\\\"\\r\\n            },\\r\\n            \\\"fin\\\": {\\r\\n                \\\"official\\\": \\\"Ison-Britannian ja Pohjois-Irlannin yhdistynyt kuningaskunta\\\",\\r\\n                \\\"common\\\": \\\"Yhdistynyt kuningaskunta\\\"\\r\\n            },\\r\\n            \\\"fra\\\": {\\r\\n                \\\"official\\\": \\\"Royaume-Uni de Grande-Bretagne et d'Irlande du Nord\\\",\\r\\n                \\\"common\\\": \\\"Royaume-Uni\\\"\\r\\n            },\\r\\n            \\\"hrv\\\": {\\r\\n                \\\"official\\\": \\\"Ujedinjeno Kraljevstvo Velike Britanije i Sjeverne Irske\\\",\\r\\n                \\\"common\\\": \\\"Ujedinjeno Kraljevstvo\\\"\\r\\n            },\\r\\n            \\\"hun\\\": {\\r\\n                \\\"official\\\": \\\"Nagy-Britannia és Észak-Írország Egyesült Királysága\\\",\\r\\n                \\\"common\\\": \\\"Egyesült Királyság\\\"\\r\\n            },\\r\\n            \\\"ita\\\": {\\r\\n                \\\"official\\\": \\\"Regno Unito di Gran Bretagna e Irlanda del Nord\\\",\\r\\n                \\\"common\\\": \\\"Regno Unito\\\"\\r\\n            },\\r\\n            \\\"jpn\\\": {\\r\\n                \\\"official\\\": \\\"グレート·ブリテンおよび北アイルランド連合王国\\\",\\r\\n                \\\"common\\\": \\\"イギリス\\\"\\r\\n            },\\r\\n            \\\"kor\\\": {\\r\\n                \\\"official\\\": \\\"그레이트브리튼 북아일랜드 연합 왕국\\\",\\r\\n                \\\"common\\\": \\\"영국\\\"\\r\\n            },\\r\\n            \\\"nld\\\": {\\r\\n                \\\"official\\\": \\\"Verenigd Koninkrijk van Groot-Brittannië en Noord-Ierland\\\",\\r\\n                \\\"common\\\": \\\"Verenigd Koninkrijk\\\"\\r\\n            },\\r\\n            \\\"per\\\": {\\r\\n                \\\"official\\\": \\\"پادشاهی متحد بریتانیای کبیر و ایرلند شمالی\\\",\\r\\n                \\\"common\\\": \\\"انگلیس\\\"\\r\\n            },\\r\\n            \\\"pol\\\": {\\r\\n                \\\"official\\\": \\\"Zjednoczone Królestwo Wielkiej Brytanii i Irlandii Północnej\\\",\\r\\n                \\\"common\\\": \\\"Zjednoczone Krłlestwo\\\"\\r\\n            },\\r\\n            \\\"por\\\": {\\r\\n                \\\"official\\\": \\\"Reino Unido da Grã-Bretanha e Irlanda do Norte\\\",\\r\\n                \\\"common\\\": \\\"Reino Unido\\\"\\r\\n            },\\r\\n            \\\"rus\\\": {\\r\\n                \\\"official\\\": \\\"Соединенное Королевство Великобритании и Северной Ирландии\\\",\\r\\n                \\\"common\\\": \\\"Великобритания\\\"\\r\\n            },\\r\\n            \\\"slk\\\": {\\r\\n                \\\"official\\\": \\\"Spojené kráľovstvo Veľkej Británie a SevernéhoÌrska\\\",\\r\\n                \\\"common\\\": \\\"Veľká Británia (Spojené kráľovstvo)\\\"\\r\\n            },\\r\\n            \\\"spa\\\": {\\r\\n                \\\"official\\\": \\\"Reino Unido de Gran Bretaña e Irlanda del Norte\\\",\\r\\n                \\\"common\\\": \\\"Reino Unido\\\"\\r\\n            },\\r\\n            \\\"swe\\\": {\\r\\n                \\\"official\\\": \\\"Förenade konungariket Storbritannien och Nordirland\\\",\\r\\n                \\\"common\\\": \\\"Storbritannien\\\"\\r\\n            },\\r\\n            \\\"urd\\\": {\\r\\n                \\\"official\\\": \\\"مملکتِ متحدہ برطانیہ عظمی و شمالی آئرلینڈ\\\",\\r\\n                \\\"common\\\": \\\"مملکتِ متحدہ\\\"\\r\\n            },\\r\\n            \\\"zho\\\": {\\r\\n                \\\"official\\\": \\\"大不列颠及北爱尔兰联合王国\\\",\\r\\n                \\\"common\\\": \\\"英国\\\"\\r\\n            }\\r\\n        },\\r\\n        \\\"latlng\\\": [\\r\\n            54.0,\\r\\n            -2.0\\r\\n        ],\\r\\n        \\\"landlocked\\\": false,\\r\\n        \\\"borders\\\": [\\r\\n            \\\"IRL\\\"\\r\\n        ],\\r\\n        \\\"area\\\": 242900.0,\\r\\n        \\\"demonyms\\\": {\\r\\n            \\\"eng\\\": {\\r\\n                \\\"f\\\": \\\"British\\\",\\r\\n                \\\"m\\\": \\\"British\\\"\\r\\n            },\\r\\n            \\\"fra\\\": {\\r\\n                \\\"f\\\": \\\"Britannique\\\",\\r\\n                \\\"m\\\": \\\"Britannique\\\"\\r\\n            }\\r\\n        },\\r\\n        \\\"flag\\\": \\\"🇬🇧\\\",\\r\\n        \\\"maps\\\": {\\r\\n            \\\"googleMaps\\\": \\\"https://goo.gl/maps/FoDtc3UKMkFsXAjHA\\\",\\r\\n            \\\"openStreetMaps\\\": \\\"https://www.openstreetmap.org/relation/62149\\\"\\r\\n        },\\r\\n        \\\"population\\\": 67215293,\\r\\n        \\\"gini\\\": {\\r\\n            \\\"2017\\\": 35.1\\r\\n        },\\r\\n        \\\"car\\\": {\\r\\n            \\\"signs\\\": [\\r\\n                \\\"GB\\\"\\r\\n            ],\\r\\n            \\\"side\\\": \\\"left\\\"\\r\\n        },\\r\\n        \\\"timezones\\\": [\\r\\n            \\\"UTC-08:00\\\",\\r\\n            \\\"UTC-05:00\\\",\\r\\n            \\\"UTC-04:00\\\",\\r\\n            \\\"UTC-03:00\\\",\\r\\n            \\\"UTC-02:00\\\",\\r\\n            \\\"UTC\\\",\\r\\n            \\\"UTC+01:00\\\",\\r\\n            \\\"UTC+02:00\\\",\\r\\n            \\\"UTC+06:00\\\"\\r\\n        ],\\r\\n        \\\"continents\\\": [\\r\\n            \\\"Europe\\\"\\r\\n        ],\\r\\n        \\\"flags\\\": {\\r\\n            \\\"png\\\": \\\"https://flagcdn.com/w320/gb.png\\\",\\r\\n            \\\"svg\\\": \\\"https://flagcdn.com/gb.svg\\\"\\r\\n        },\\r\\n        \\\"coatOfArms\\\": {\\r\\n            \\\"png\\\": \\\"https://mainfacts.com/media/images/coats_of_arms/gb.png\\\",\\r\\n            \\\"svg\\\": \\\"https://mainfacts.com/media/images/coats_of_arms/gb.svg\\\"\\r\\n        },\\r\\n        \\\"startOfWeek\\\": \\\"monday\\\",\\r\\n        \\\"capitalInfo\\\": {\\r\\n            \\\"latlng\\\": [\\r\\n                51.5,\\r\\n                -0.08\\r\\n            ]\\r\\n        },\\r\\n        \\\"postalCode\\\": {\\r\\n            \\\"format\\\": \\\"@# #@@|@## #@@|@@# #@@|@@## #@@|@#@ #@@|@@#@ #@@|GIR0AA\\\",\\r\\n            \\\"regex\\\": \\\"^(([A-Z]\\\\\\\\d{2}[A-Z]{2})|([A-Z]\\\\\\\\d{3}[A-Z]{2})|([A-Z]{2}\\\\\\\\d{2}[A-Z]{2})|([A-Z]{2}\\\\\\\\d{3}[A-Z]{2})|([A-Z]\\\\\\\\d[A-Z]\\\\\\\\d[A-Z]{2})|([A-Z]{2}\\\\\\\\d[A-Z]\\\\\\\\d[A-Z]{2})|(GIR0AA))$\\\"\\r\\n        }\\r\\n    }\\r\\n]\",\"responseHeaders\":\"\"}]",
+                "feSchemaMap": {}
+              }
+            },
+            "output": {
+              "pathParams": {
+                "type": "json",
+                "value": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"string\"}},\"required\":[]}",
+                "fe_metadata": "[{\"parameterName\":\"code\",\"type\":\"string\"}]"
+              },
+              "headers": {
+                "type": "json",
+                "value": "{\"type\":\"object\",\"properties\":{\"Accept\":{\"type\":\"string\",\"visible\":false},\"Accept-Charset\":{\"type\":\"string\",\"visible\":false},\"Accept-Encoding\":{\"type\":\"string\",\"visible\":false},\"Content-Type\":{\"type\":\"string\",\"visible\":false},\"Content-Length\":{\"type\":\"string\",\"visible\":false},\"Connection\":{\"type\":\"string\",\"visible\":false},\"Cookie\":{\"type\":\"string\",\"visible\":false},\"Pragma\":{\"type\":\"string\",\"visible\":false}},\"required\":[]}",
+                "fe_metadata": "[{\"parameterName\":\"Accept\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Charset\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Encoding\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Type\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Length\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Connection\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Cookie\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Pragma\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false}]"
+              }
+            }
+          },
+          "name": "getCountryInfo"
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "id": "flow:getCountryInfo",
+      "data": {
+        "name": "getCountryInfo",
+        "description": "",
+        "links": [
+          {
+            "id": 1,
+            "from": "call_CountryService",
+            "to": "Return",
+            "type": "label",
+            "label": "call_CountryService to Return"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "call_CountryService",
+            "name": "call_CountryService",
+            "description": "Simple REST Activity",
+            "settings": {
+              "retryOnError": {
+                "count": 0,
+                "interval": 0
+              }
+            },
+            "activity": {
+              "ref": "#rest",
+              "input": {
+                "enableASR": false,
+                "asrDialog": "",
+                "swagger": "",
+                "authorization": false,
+                "serviceName": "",
+                "resourcePath": "",
+                "Method": "GET",
+                "Uri": "https://restcountries.com/v3.1/alpha/{code}",
+                "requestType": "application/json",
+                "Use certificate for verification": false,
+                "mutualAuth": false,
+                "Client Certificate": "",
+                "Client Key": "",
+                "Server Certificate": "",
+                "disableKeepAlives": false,
+                "Timeout": 0,
+                "proxy": "",
+                "host": "",
+                "pathParams": {
+                  "mapping": {
+                    "code": "=$flow.pathParams.code"
+                  }
+                }
+              },
+              "output": {
+                "configureResponseCodes": false,
+                "responseType": "application/json",
+                "responseOutput": "JSON Object"
+              },
+              "schemas": {
+                "input": {
+                  "pathParams": {
+                    "type": "json",
+                    "value": "{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"string\"}},\"required\":[]}",
+                    "fe_metadata": "[{\"parameterName\":\"code\",\"type\":\"string\"}]"
+                  },
+                  "headers": {
+                    "type": "json",
+                    "value": "{\"type\":\"object\",\"properties\":{\"Accept\":{\"type\":\"string\",\"visible\":false},\"Accept-Charset\":{\"type\":\"string\",\"visible\":false},\"Accept-Encoding\":{\"type\":\"string\",\"visible\":false},\"Content-Type\":{\"type\":\"string\",\"visible\":false},\"Content-Length\":{\"type\":\"string\",\"visible\":false},\"Connection\":{\"type\":\"string\",\"visible\":false},\"Cookie\":{\"type\":\"string\",\"visible\":false},\"Pragma\":{\"type\":\"string\",\"visible\":false}},\"required\":[]}",
+                    "fe_metadata": "[{\"parameterName\":\"Accept\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Charset\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Encoding\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Type\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Length\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Connection\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Cookie\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Pragma\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false}]"
+                  }
+                },
+                "output": {
+                  "responseBody": {
+                    "type": "json",
+                    "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"object\",\"properties\":{\"common\":{\"type\":\"string\"},\"official\":{\"type\":\"string\"},\"nativeName\":{\"type\":\"object\",\"properties\":{\"eng\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}}}}}},\"tld\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"cca2\":{\"type\":\"string\"},\"ccn3\":{\"type\":\"string\"},\"cca3\":{\"type\":\"string\"},\"cioc\":{\"type\":\"string\"},\"independent\":{\"type\":\"boolean\"},\"status\":{\"type\":\"string\"},\"unMember\":{\"type\":\"boolean\"},\"currencies\":{\"type\":\"object\",\"properties\":{\"GBP\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"symbol\":{\"type\":\"string\"}}}}},\"idd\":{\"type\":\"object\",\"properties\":{\"root\":{\"type\":\"string\"},\"suffixes\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}}}},\"capital\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"altSpellings\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"region\":{\"type\":\"string\"},\"subregion\":{\"type\":\"string\"},\"languages\":{\"type\":\"object\",\"properties\":{\"eng\":{\"type\":\"string\"}}},\"translations\":{\"type\":\"object\",\"properties\":{\"ara\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}},\"ces\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}},\"cym\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}},\"deu\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}},\"est\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}},\"fin\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}},\"fra\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}},\"hrv\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}},\"hun\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}},\"ita\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}},\"jpn\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}},\"kor\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}},\"nld\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}},\"per\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}},\"pol\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}},\"por\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}},\"rus\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}},\"slk\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}},\"spa\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}},\"swe\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}},\"urd\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}},\"zho\":{\"type\":\"object\",\"properties\":{\"official\":{\"type\":\"string\"},\"common\":{\"type\":\"string\"}}}}},\"latlng\":{\"type\":\"array\",\"items\":{\"type\":\"number\"}},\"landlocked\":{\"type\":\"boolean\"},\"borders\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"area\":{\"type\":\"number\"},\"demonyms\":{\"type\":\"object\",\"properties\":{\"eng\":{\"type\":\"object\",\"properties\":{\"f\":{\"type\":\"string\"},\"m\":{\"type\":\"string\"}}},\"fra\":{\"type\":\"object\",\"properties\":{\"f\":{\"type\":\"string\"},\"m\":{\"type\":\"string\"}}}}},\"flag\":{\"type\":\"string\"},\"maps\":{\"type\":\"object\",\"properties\":{\"googleMaps\":{\"type\":\"string\"},\"openStreetMaps\":{\"type\":\"string\"}}},\"population\":{\"type\":\"number\"},\"gini\":{\"type\":\"object\",\"properties\":{\"2017\":{\"type\":\"number\"}}},\"car\":{\"type\":\"object\",\"properties\":{\"signs\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"side\":{\"type\":\"string\"}}},\"timezones\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"continents\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"flags\":{\"type\":\"object\",\"properties\":{\"png\":{\"type\":\"string\"},\"svg\":{\"type\":\"string\"}}},\"coatOfArms\":{\"type\":\"object\",\"properties\":{\"png\":{\"type\":\"string\"},\"svg\":{\"type\":\"string\"}}},\"startOfWeek\":{\"type\":\"string\"},\"capitalInfo\":{\"type\":\"object\",\"properties\":{\"latlng\":{\"type\":\"array\",\"items\":{\"type\":\"number\"}}}},\"postalCode\":{\"type\":\"object\",\"properties\":{\"format\":{\"type\":\"string\"},\"regex\":{\"type\":\"string\"}}}}}}",
+                    "fe_metadata": "[\r\n    {\r\n        \"name\": {\r\n            \"common\": \"United Kingdom\",\r\n            \"official\": \"United Kingdom of Great Britain and Northern Ireland\",\r\n            \"nativeName\": {\r\n                \"eng\": {\r\n                    \"official\": \"United Kingdom of Great Britain and Northern Ireland\",\r\n                    \"common\": \"United Kingdom\"\r\n                }\r\n            }\r\n        },\r\n        \"tld\": [\r\n            \".uk\"\r\n        ],\r\n        \"cca2\": \"GB\",\r\n        \"ccn3\": \"826\",\r\n        \"cca3\": \"GBR\",\r\n        \"cioc\": \"GBR\",\r\n        \"independent\": true,\r\n        \"status\": \"officially-assigned\",\r\n        \"unMember\": true,\r\n        \"currencies\": {\r\n            \"GBP\": {\r\n                \"name\": \"British pound\",\r\n                \"symbol\": \"£\"\r\n            }\r\n        },\r\n        \"idd\": {\r\n            \"root\": \"+4\",\r\n            \"suffixes\": [\r\n                \"4\"\r\n            ]\r\n        },\r\n        \"capital\": [\r\n            \"London\"\r\n        ],\r\n        \"altSpellings\": [\r\n            \"GB\",\r\n            \"UK\",\r\n            \"Great Britain\"\r\n        ],\r\n        \"region\": \"Europe\",\r\n        \"subregion\": \"Northern Europe\",\r\n        \"languages\": {\r\n            \"eng\": \"English\"\r\n        },\r\n        \"translations\": {\r\n            \"ara\": {\r\n                \"official\": \"المملكة المتحدة لبريطانيا العظمى وايرلندا الشمالية\",\r\n                \"common\": \"المملكة المتحدة\"\r\n            },\r\n            \"ces\": {\r\n                \"official\": \"Spojené království Velké Británie a Severního Irska\",\r\n                \"common\": \"Spojené království\"\r\n            },\r\n            \"cym\": {\r\n                \"official\": \"United Kingdom of Great Britain and Northern Ireland\",\r\n                \"common\": \"United Kingdom\"\r\n            },\r\n            \"deu\": {\r\n                \"official\": \"Vereinigtes Königreich Großbritannien und Nordirland\",\r\n                \"common\": \"Vereinigtes Königreich\"\r\n            },\r\n            \"est\": {\r\n                \"official\": \"Suurbritannia ja Põhja-Iiri Ühendkuningriik\",\r\n                \"common\": \"Suurbritannia\"\r\n            },\r\n            \"fin\": {\r\n                \"official\": \"Ison-Britannian ja Pohjois-Irlannin yhdistynyt kuningaskunta\",\r\n                \"common\": \"Yhdistynyt kuningaskunta\"\r\n            },\r\n            \"fra\": {\r\n                \"official\": \"Royaume-Uni de Grande-Bretagne et d'Irlande du Nord\",\r\n                \"common\": \"Royaume-Uni\"\r\n            },\r\n            \"hrv\": {\r\n                \"official\": \"Ujedinjeno Kraljevstvo Velike Britanije i Sjeverne Irske\",\r\n                \"common\": \"Ujedinjeno Kraljevstvo\"\r\n            },\r\n            \"hun\": {\r\n                \"official\": \"Nagy-Britannia és Észak-Írország Egyesült Királysága\",\r\n                \"common\": \"Egyesült Királyság\"\r\n            },\r\n            \"ita\": {\r\n                \"official\": \"Regno Unito di Gran Bretagna e Irlanda del Nord\",\r\n                \"common\": \"Regno Unito\"\r\n            },\r\n            \"jpn\": {\r\n                \"official\": \"グレート·ブリテンおよび北アイルランド連合王国\",\r\n                \"common\": \"イギリス\"\r\n            },\r\n            \"kor\": {\r\n                \"official\": \"그레이트브리튼 북아일랜드 연합 왕국\",\r\n                \"common\": \"영국\"\r\n            },\r\n            \"nld\": {\r\n                \"official\": \"Verenigd Koninkrijk van Groot-Brittannië en Noord-Ierland\",\r\n                \"common\": \"Verenigd Koninkrijk\"\r\n            },\r\n            \"per\": {\r\n                \"official\": \"پادشاهی متحد بریتانیای کبیر و ایرلند شمالی\",\r\n                \"common\": \"انگلیس\"\r\n            },\r\n            \"pol\": {\r\n                \"official\": \"Zjednoczone Królestwo Wielkiej Brytanii i Irlandii Północnej\",\r\n                \"common\": \"Zjednoczone Krłlestwo\"\r\n            },\r\n            \"por\": {\r\n                \"official\": \"Reino Unido da Grã-Bretanha e Irlanda do Norte\",\r\n                \"common\": \"Reino Unido\"\r\n            },\r\n            \"rus\": {\r\n                \"official\": \"Соединенное Королевство Великобритании и Северной Ирландии\",\r\n                \"common\": \"Великобритания\"\r\n            },\r\n            \"slk\": {\r\n                \"official\": \"Spojené kráľovstvo Veľkej Británie a SevernéhoÌrska\",\r\n                \"common\": \"Veľká Británia (Spojené kráľovstvo)\"\r\n            },\r\n            \"spa\": {\r\n                \"official\": \"Reino Unido de Gran Bretaña e Irlanda del Norte\",\r\n                \"common\": \"Reino Unido\"\r\n            },\r\n            \"swe\": {\r\n                \"official\": \"Förenade konungariket Storbritannien och Nordirland\",\r\n                \"common\": \"Storbritannien\"\r\n            },\r\n            \"urd\": {\r\n                \"official\": \"مملکتِ متحدہ برطانیہ عظمی و شمالی آئرلینڈ\",\r\n                \"common\": \"مملکتِ متحدہ\"\r\n            },\r\n            \"zho\": {\r\n                \"official\": \"大不列颠及北爱尔兰联合王国\",\r\n                \"common\": \"英国\"\r\n            }\r\n        },\r\n        \"latlng\": [\r\n            54.0,\r\n            -2.0\r\n        ],\r\n        \"landlocked\": false,\r\n        \"borders\": [\r\n            \"IRL\"\r\n        ],\r\n        \"area\": 242900.0,\r\n        \"demonyms\": {\r\n            \"eng\": {\r\n                \"f\": \"British\",\r\n                \"m\": \"British\"\r\n            },\r\n            \"fra\": {\r\n                \"f\": \"Britannique\",\r\n                \"m\": \"Britannique\"\r\n            }\r\n        },\r\n        \"flag\": \"🇬🇧\",\r\n        \"maps\": {\r\n            \"googleMaps\": \"https://goo.gl/maps/FoDtc3UKMkFsXAjHA\",\r\n            \"openStreetMaps\": \"https://www.openstreetmap.org/relation/62149\"\r\n        },\r\n        \"population\": 67215293,\r\n        \"gini\": {\r\n            \"2017\": 35.1\r\n        },\r\n        \"car\": {\r\n            \"signs\": [\r\n                \"GB\"\r\n            ],\r\n            \"side\": \"left\"\r\n        },\r\n        \"timezones\": [\r\n            \"UTC-08:00\",\r\n            \"UTC-05:00\",\r\n            \"UTC-04:00\",\r\n            \"UTC-03:00\",\r\n            \"UTC-02:00\",\r\n            \"UTC\",\r\n            \"UTC+01:00\",\r\n            \"UTC+02:00\",\r\n            \"UTC+06:00\"\r\n        ],\r\n        \"continents\": [\r\n            \"Europe\"\r\n        ],\r\n        \"flags\": {\r\n            \"png\": \"https://flagcdn.com/w320/gb.png\",\r\n            \"svg\": \"https://flagcdn.com/gb.svg\"\r\n        },\r\n        \"coatOfArms\": {\r\n            \"png\": \"https://mainfacts.com/media/images/coats_of_arms/gb.png\",\r\n            \"svg\": \"https://mainfacts.com/media/images/coats_of_arms/gb.svg\"\r\n        },\r\n        \"startOfWeek\": \"monday\",\r\n        \"capitalInfo\": {\r\n            \"latlng\": [\r\n                51.5,\r\n                -0.08\r\n            ]\r\n        },\r\n        \"postalCode\": {\r\n            \"format\": \"@# #@@|@## #@@|@@# #@@|@@## #@@|@#@ #@@|@@#@ #@@|GIR0AA\",\r\n            \"regex\": \"^(([A-Z]\\\\d{2}[A-Z]{2})|([A-Z]\\\\d{3}[A-Z]{2})|([A-Z]{2}\\\\d{2}[A-Z]{2})|([A-Z]{2}\\\\d{3}[A-Z]{2})|([A-Z]\\\\d[A-Z]\\\\d[A-Z]{2})|([A-Z]{2}\\\\d[A-Z]\\\\d[A-Z]{2})|(GIR0AA))$\"\r\n        }\r\n    }\r\n]",
+                    "feSchemaMap": {}
+                  },
+                  "headers": {
+                    "type": "json",
+                    "value": "{\"type\":\"object\",\"properties\":{\"Accept\":{\"type\":\"string\",\"visible\":false},\"Accept-Charset\":{\"type\":\"string\",\"visible\":false},\"Accept-Encoding\":{\"type\":\"string\",\"visible\":false},\"Content-Type\":{\"type\":\"string\",\"visible\":false},\"Content-Length\":{\"type\":\"string\",\"visible\":false},\"Connection\":{\"type\":\"string\",\"visible\":false},\"Cookie\":{\"type\":\"string\",\"visible\":false},\"Pragma\":{\"type\":\"string\",\"visible\":false},\"Set-Cookie\":{\"type\":\"string\",\"visible\":false}},\"required\":[]}",
+                    "fe_metadata": "[{\"parameterName\":\"Accept\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Charset\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Encoding\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Type\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Length\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Connection\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Cookie\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Pragma\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Set-Cookie\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false}]"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "Return",
+            "name": "Return",
+            "description": "Simple Return Activity",
+            "activity": {
+              "ref": "#actreturn",
+              "settings": {
+                "mappings": {
+                  "code": "=$activity[call_CountryService].statusCode",
+                  "responseBody": "=$activity[call_CountryService].responseBody[0]"
+                }
+              }
+            }
+          }
+        ],
+        "fe_metadata": "eyJjYWxsX0NvdW50cnlTZXJ2aWNlIjp7IngiOjUwLCJ5Ijo1MH0sIlJldHVybiI6eyJ4IjoyNTAsInkiOjUwfX0=",
+        "metadata": {
+          "input": [
+            {
+              "name": "pathParams",
+              "type": "object",
+              "schema": {
+                "type": "json",
+                "value": "{\"code\":{\"type\":\"string\"}}"
+              }
+            },
+            {
+              "name": "headers",
+              "type": "object",
+              "schema": {
+                "type": "json",
+                "value": "{\"Accept\":{\"type\":\"string\",\"visible\":false},\"Accept-Charset\":{\"type\":\"string\",\"visible\":false},\"Accept-Encoding\":{\"type\":\"string\",\"visible\":false},\"Content-Type\":{\"type\":\"string\",\"visible\":false},\"Content-Length\":{\"type\":\"string\",\"visible\":false},\"Connection\":{\"type\":\"string\",\"visible\":false},\"Cookie\":{\"type\":\"string\",\"visible\":false},\"Pragma\":{\"type\":\"string\",\"visible\":false}}"
+              }
+            },
+            {
+              "name": "requestURI",
+              "type": "string"
+            },
+            {
+              "name": "method",
+              "type": "string"
+            }
+          ],
+          "output": [
+            {
+              "name": "code",
+              "type": "integer"
+            },
+            {
+              "name": "responseBody",
+              "type": "object",
+              "schema": {
+                "type": "json",
+                "value": "{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}"
+              }
+            }
+          ],
+          "fe_metadata": {
+            "input": "{\"type\":\"object\",\"title\":\"ReceiveHTTPMessage\",\"properties\":{\"pathParams\":{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"string\"}},\"required\":[]},\"headers\":{\"type\":\"object\",\"properties\":{\"Accept\":{\"type\":\"string\",\"visible\":false},\"Accept-Charset\":{\"type\":\"string\",\"visible\":false},\"Accept-Encoding\":{\"type\":\"string\",\"visible\":false},\"Content-Type\":{\"type\":\"string\",\"visible\":false},\"Content-Length\":{\"type\":\"string\",\"visible\":false},\"Connection\":{\"type\":\"string\",\"visible\":false},\"Cookie\":{\"type\":\"string\",\"visible\":false},\"Pragma\":{\"type\":\"string\",\"visible\":false}},\"required\":[]},\"requestURI\":{\"type\":\"string\",\"required\":false},\"method\":{\"type\":\"string\",\"required\":false}}}",
+            "output": "{\"type\":\"object\",\"title\":\"Inputs\",\"properties\":{\"code\":{\"type\":\"integer\",\"required\":false},\"responseBody\":{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}},\"required\":[]}"
+          }
+        },
+        "explicitReply": true
+      }
+    }
+  ],
+  "properties": [],
+  "schemas": {
+    "CountryResponse": {
+      "type": "json",
+      "value": "{\n    \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n    \"type\": \"array\",\n    \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n            \"name\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"common\": {\n                        \"type\": \"string\"\n                    },\n                    \"official\": {\n                        \"type\": \"string\"\n                    },\n                    \"nativeName\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"eng\": {\n                                \"type\": \"object\",\n                                \"properties\": {\n                                    \"official\": {\n                                        \"type\": \"string\"\n                                    },\n                                    \"common\": {\n                                        \"type\": \"string\"\n                                    }\n                                }\n                            }\n                        }\n                    }\n                }\n            },\n            \"tld\": {\n                \"type\": \"array\",\n                \"items\": {\n                    \"type\": \"string\"\n                }\n            },\n            \"cca2\": {\n                \"type\": \"string\"\n            },\n            \"ccn3\": {\n                \"type\": \"string\"\n            },\n            \"cca3\": {\n                \"type\": \"string\"\n            },\n            \"cioc\": {\n                \"type\": \"string\"\n            },\n            \"independent\": {\n                \"type\": \"boolean\"\n            },\n            \"status\": {\n                \"type\": \"string\"\n            },\n            \"unMember\": {\n                \"type\": \"boolean\"\n            },\n            \"currencies\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"GBP\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"name\": {\n                                \"type\": \"string\"\n                            },\n                            \"symbol\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    }\n                }\n            },\n            \"idd\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"root\": {\n                        \"type\": \"string\"\n                    },\n                    \"suffixes\": {\n                        \"type\": \"array\",\n                        \"items\": {\n                            \"type\": \"string\"\n                        }\n                    }\n                }\n            },\n            \"capital\": {\n                \"type\": \"array\",\n                \"items\": {\n                    \"type\": \"string\"\n                }\n            },\n            \"altSpellings\": {\n                \"type\": \"array\",\n                \"items\": {\n                    \"type\": \"string\"\n                }\n            },\n            \"region\": {\n                \"type\": \"string\"\n            },\n            \"subregion\": {\n                \"type\": \"string\"\n            },\n            \"languages\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"eng\": {\n                        \"type\": \"string\"\n                    }\n                }\n            },\n            \"translations\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"ara\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"ces\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"cym\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"deu\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"est\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"fin\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"fra\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"hrv\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"hun\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"ita\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"jpn\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"kor\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"nld\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"per\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"pol\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"por\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"rus\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"slk\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"spa\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"swe\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"urd\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"zho\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    }\n                }\n            },\n            \"latlng\": {\n                \"type\": \"array\",\n                \"items\": {\n                    \"type\": \"number\"\n                }\n            },\n            \"landlocked\": {\n                \"type\": \"boolean\"\n            },\n            \"borders\": {\n                \"type\": \"array\",\n                \"items\": {\n                    \"type\": \"string\"\n                }\n            },\n            \"area\": {\n                \"type\": \"number\"\n            },\n            \"demonyms\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"eng\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"f\": {\n                                \"type\": \"string\"\n                            },\n                            \"m\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"fra\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"f\": {\n                                \"type\": \"string\"\n                            },\n                            \"m\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    }\n                }\n            },\n            \"flag\": {\n                \"type\": \"string\"\n            },\n            \"maps\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"googleMaps\": {\n                        \"type\": \"string\"\n                    },\n                    \"openStreetMaps\": {\n                        \"type\": \"string\"\n                    }\n                }\n            },\n            \"population\": {\n                \"type\": \"number\"\n            },\n            \"gini\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"2017\": {\n                        \"type\": \"number\"\n                    }\n                }\n            },\n            \"car\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"signs\": {\n                        \"type\": \"array\",\n                        \"items\": {\n                            \"type\": \"string\"\n                        }\n                    },\n                    \"side\": {\n                        \"type\": \"string\"\n                    }\n                }\n            },\n            \"timezones\": {\n                \"type\": \"array\",\n                \"items\": {\n                    \"type\": \"string\"\n                }\n            },\n            \"continents\": {\n                \"type\": \"array\",\n                \"items\": {\n                    \"type\": \"string\"\n                }\n            },\n            \"flags\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"png\": {\n                        \"type\": \"string\"\n                    },\n                    \"svg\": {\n                        \"type\": \"string\"\n                    }\n                }\n            },\n            \"coatOfArms\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"png\": {\n                        \"type\": \"string\"\n                    },\n                    \"svg\": {\n                        \"type\": \"string\"\n                    }\n                }\n            },\n            \"startOfWeek\": {\n                \"type\": \"string\"\n            },\n            \"capitalInfo\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"latlng\": {\n                        \"type\": \"array\",\n                        \"items\": {\n                            \"type\": \"number\"\n                        }\n                    }\n                }\n            },\n            \"postalCode\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"format\": {\n                        \"type\": \"string\"\n                    },\n                    \"regex\": {\n                        \"type\": \"string\"\n                    }\n                }\n            }\n        }\n    }\n}",
+      "fe_metadata": "{\n    \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n    \"type\": \"array\",\n    \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n            \"name\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"common\": {\n                        \"type\": \"string\"\n                    },\n                    \"official\": {\n                        \"type\": \"string\"\n                    },\n                    \"nativeName\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"eng\": {\n                                \"type\": \"object\",\n                                \"properties\": {\n                                    \"official\": {\n                                        \"type\": \"string\"\n                                    },\n                                    \"common\": {\n                                        \"type\": \"string\"\n                                    }\n                                }\n                            }\n                        }\n                    }\n                }\n            },\n            \"tld\": {\n                \"type\": \"array\",\n                \"items\": {\n                    \"type\": \"string\"\n                }\n            },\n            \"cca2\": {\n                \"type\": \"string\"\n            },\n            \"ccn3\": {\n                \"type\": \"string\"\n            },\n            \"cca3\": {\n                \"type\": \"string\"\n            },\n            \"cioc\": {\n                \"type\": \"string\"\n            },\n            \"independent\": {\n                \"type\": \"boolean\"\n            },\n            \"status\": {\n                \"type\": \"string\"\n            },\n            \"unMember\": {\n                \"type\": \"boolean\"\n            },\n            \"currencies\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"GBP\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"name\": {\n                                \"type\": \"string\"\n                            },\n                            \"symbol\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    }\n                }\n            },\n            \"idd\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"root\": {\n                        \"type\": \"string\"\n                    },\n                    \"suffixes\": {\n                        \"type\": \"array\",\n                        \"items\": {\n                            \"type\": \"string\"\n                        }\n                    }\n                }\n            },\n            \"capital\": {\n                \"type\": \"array\",\n                \"items\": {\n                    \"type\": \"string\"\n                }\n            },\n            \"altSpellings\": {\n                \"type\": \"array\",\n                \"items\": {\n                    \"type\": \"string\"\n                }\n            },\n            \"region\": {\n                \"type\": \"string\"\n            },\n            \"subregion\": {\n                \"type\": \"string\"\n            },\n            \"languages\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"eng\": {\n                        \"type\": \"string\"\n                    }\n                }\n            },\n            \"translations\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"ara\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"ces\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"cym\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"deu\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"est\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"fin\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"fra\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"hrv\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"hun\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"ita\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"jpn\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"kor\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"nld\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"per\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"pol\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"por\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"rus\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"slk\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"spa\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"swe\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"urd\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"zho\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"official\": {\n                                \"type\": \"string\"\n                            },\n                            \"common\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    }\n                }\n            },\n            \"latlng\": {\n                \"type\": \"array\",\n                \"items\": {\n                    \"type\": \"number\"\n                }\n            },\n            \"landlocked\": {\n                \"type\": \"boolean\"\n            },\n            \"borders\": {\n                \"type\": \"array\",\n                \"items\": {\n                    \"type\": \"string\"\n                }\n            },\n            \"area\": {\n                \"type\": \"number\"\n            },\n            \"demonyms\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"eng\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"f\": {\n                                \"type\": \"string\"\n                            },\n                            \"m\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    },\n                    \"fra\": {\n                        \"type\": \"object\",\n                        \"properties\": {\n                            \"f\": {\n                                \"type\": \"string\"\n                            },\n                            \"m\": {\n                                \"type\": \"string\"\n                            }\n                        }\n                    }\n                }\n            },\n            \"flag\": {\n                \"type\": \"string\"\n            },\n            \"maps\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"googleMaps\": {\n                        \"type\": \"string\"\n                    },\n                    \"openStreetMaps\": {\n                        \"type\": \"string\"\n                    }\n                }\n            },\n            \"population\": {\n                \"type\": \"number\"\n            },\n            \"gini\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"2017\": {\n                        \"type\": \"number\"\n                    }\n                }\n            },\n            \"car\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"signs\": {\n                        \"type\": \"array\",\n                        \"items\": {\n                            \"type\": \"string\"\n                        }\n                    },\n                    \"side\": {\n                        \"type\": \"string\"\n                    }\n                }\n            },\n            \"timezones\": {\n                \"type\": \"array\",\n                \"items\": {\n                    \"type\": \"string\"\n                }\n            },\n            \"continents\": {\n                \"type\": \"array\",\n                \"items\": {\n                    \"type\": \"string\"\n                }\n            },\n            \"flags\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"png\": {\n                        \"type\": \"string\"\n                    },\n                    \"svg\": {\n                        \"type\": \"string\"\n                    }\n                }\n            },\n            \"coatOfArms\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"png\": {\n                        \"type\": \"string\"\n                    },\n                    \"svg\": {\n                        \"type\": \"string\"\n                    }\n                }\n            },\n            \"startOfWeek\": {\n                \"type\": \"string\"\n            },\n            \"capitalInfo\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"latlng\": {\n                        \"type\": \"array\",\n                        \"items\": {\n                            \"type\": \"number\"\n                        }\n                    }\n                }\n            },\n            \"postalCode\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"format\": {\n                        \"type\": \"string\"\n                    },\n                    \"regex\": {\n                        \"type\": \"string\"\n                    }\n                }\n            }\n        }\n    }\n}"
+    }
+  },
+  "connections": {},
+  "contrib": "W3sicmVmIjoiZ2l0aHViLmNvbS90aWJjby9mbG9nby1nZW5lcmFsL3NyYy9hcHAvR2VuZXJhbCIsImlkIjoiR2VuZXJhbCIsInZlcnNpb24iOiIxLjYuMiIsInRhZyI6IjEuNi4yLWIwMiIsIm5hbWUiOiJHZW5lcmFsIiwiczNsb2NhdGlvbiI6IlRpYmNvL0dlbmVyYWwiLCJpc1VzZXJFeHRlbnNpb24iOmZhbHNlfV0=",
+  "metadata": {
+    "endpoints": [
+      {
+        "protocol": "http",
+        "port": "9999",
+        "spec": {
+          "name": "MLE_CountryFlogo",
+          "version": "1.0.0"
+        },
+        "title": "ReceiveHTTPMessage",
+        "swagger": {
+          "swagger": "2.0",
+          "info": {
+            "title": "MLE_CountryFlogo",
+            "version": "1.0.0",
+            "description": "Simple REST Trigger"
+          },
+          "paths": {
+            "/country/{code}": {
+              "get": {
+                "summary": "getCountryInfo",
+                "operationId": "get_country_code",
+                "parameters": [
+                  {
+                    "name": "code",
+                    "in": "path",
+                    "description": "Request parameter",
+                    "required": true,
+                    "type": "string"
+                  }
+                ],
+                "responses": {
+                  "200": {
+                    "description": "",
+                    "schema": {
+                      "$ref": "#/definitions/schema1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "definitions": {
+            "schema1": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "object",
+                    "properties": {
+                      "common": {
+                        "type": "string"
+                      },
+                      "official": {
+                        "type": "string"
+                      },
+                      "nativeName": {
+                        "type": "object",
+                        "properties": {
+                          "eng": {
+                            "type": "object",
+                            "properties": {
+                              "official": {
+                                "type": "string"
+                              },
+                              "common": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "tld": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "cca2": {
+                    "type": "string"
+                  },
+                  "ccn3": {
+                    "type": "string"
+                  },
+                  "cca3": {
+                    "type": "string"
+                  },
+                  "cioc": {
+                    "type": "string"
+                  },
+                  "independent": {
+                    "type": "boolean"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "unMember": {
+                    "type": "boolean"
+                  },
+                  "currencies": {
+                    "type": "object",
+                    "properties": {
+                      "GBP": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "symbol": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "idd": {
+                    "type": "object",
+                    "properties": {
+                      "root": {
+                        "type": "string"
+                      },
+                      "suffixes": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "capital": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "altSpellings": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "region": {
+                    "type": "string"
+                  },
+                  "subregion": {
+                    "type": "string"
+                  },
+                  "languages": {
+                    "type": "object",
+                    "properties": {
+                      "eng": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "translations": {
+                    "type": "object",
+                    "properties": {
+                      "ara": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "ces": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "cym": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "deu": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "est": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "fin": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "fra": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "hrv": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "hun": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "ita": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "jpn": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "kor": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "nld": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "per": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "pol": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "por": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "rus": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "slk": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "spa": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "swe": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "urd": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "zho": {
+                        "type": "object",
+                        "properties": {
+                          "official": {
+                            "type": "string"
+                          },
+                          "common": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "latlng": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    }
+                  },
+                  "landlocked": {
+                    "type": "boolean"
+                  },
+                  "borders": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "area": {
+                    "type": "number"
+                  },
+                  "demonyms": {
+                    "type": "object",
+                    "properties": {
+                      "eng": {
+                        "type": "object",
+                        "properties": {
+                          "f": {
+                            "type": "string"
+                          },
+                          "m": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "fra": {
+                        "type": "object",
+                        "properties": {
+                          "f": {
+                            "type": "string"
+                          },
+                          "m": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "flag": {
+                    "type": "string"
+                  },
+                  "maps": {
+                    "type": "object",
+                    "properties": {
+                      "googleMaps": {
+                        "type": "string"
+                      },
+                      "openStreetMaps": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "population": {
+                    "type": "number"
+                  },
+                  "gini": {
+                    "type": "object",
+                    "properties": {
+                      "2017": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "car": {
+                    "type": "object",
+                    "properties": {
+                      "signs": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "side": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "timezones": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "continents": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "flags": {
+                    "type": "object",
+                    "properties": {
+                      "png": {
+                        "type": "string"
+                      },
+                      "svg": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "coatOfArms": {
+                    "type": "object",
+                    "properties": {
+                      "png": {
+                        "type": "string"
+                      },
+                      "svg": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "startOfWeek": {
+                    "type": "string"
+                  },
+                  "capitalInfo": {
+                    "type": "object",
+                    "properties": {
+                      "latlng": {
+                        "type": "array",
+                        "items": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  },
+                  "postalCode": {
+                    "type": "object",
+                    "properties": {
+                      "format": {
+                        "type": "string"
+                      },
+                      "regex": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "flogoVersion": "2.25.1"
+  }
+}
