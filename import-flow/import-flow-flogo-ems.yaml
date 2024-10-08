@@ -110,7 +110,7 @@ spec:
       name: Resource Skeleton
       action: fetch:template
       input:
-        url: https://github.com/TIBCO-Hub-Backstage/import-poc-hugo/blob/main/resource-skeleton/
+        url: https://github.com/MLEIJDEK/flogo/blob/main/nunjucks/
         targetPath: ${{ parameters.application_folder }}
         templateFileExtension: true
         values:
