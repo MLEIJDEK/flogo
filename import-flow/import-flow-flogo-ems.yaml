@@ -4,6 +4,8 @@ metadata:
   name: import-flow-flogo-ems
   title: Import flow for Flogo projects with EMS
   description: Import existing Flogo projects into TIBCO Developer Hub
+  annotations:
+    backstage.io/techdocs-ref: dir:.
   tags:
     - import-flow
     - tibco
