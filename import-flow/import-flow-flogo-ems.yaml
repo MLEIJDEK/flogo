@@ -31,6 +31,10 @@ spec:
         - application
         - owner
       properties:
+        lifecycle:
+          title: lifecycle
+          type: string
+          description: Asset lifecycle stage
         application_folder:
           title: Flogo Application Folder
           type: string
