@@ -22,7 +22,7 @@ metadata:
     - flogo-task
 spec:
   type: flogo-task
-  lifecycle: production
+  lifecycle: development
   owner: ${{ values.owner }}
   dependsOn: ['${{ 'component:default/' + values.flogo_project_name + "_FLOGO_APP"}}']
     {%- endfor %}
