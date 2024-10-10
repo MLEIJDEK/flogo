@@ -18,6 +18,7 @@ metadata:
         url: https://docs.tibco.com/products/tibco-flogo-enterprise
     annotations:
       github.com/project-slug: https://github.com/MLEIJDEK/flogo
+      backstage.io/techdocs-ref: dir:.
 spec:
     type: flogo
     lifecycle: development
