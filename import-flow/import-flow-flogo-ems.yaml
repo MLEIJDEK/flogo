@@ -9,6 +9,11 @@ metadata:
     - tibco
     - template
     - developer-hub
+  lifecycle:
+    - production
+    - developement
+    - deprecated
+    - test
 spec:
   owner: group:default/tibco-imported
   type: import-flow
