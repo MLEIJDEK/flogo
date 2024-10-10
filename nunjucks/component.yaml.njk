@@ -23,7 +23,7 @@ metadata:
       github.com/project-slug: ${{ "https://"  + (values.repoUrl | parseRepoUrl).host + "/" + (values.repoUrl | parseRepoUrl).owner + "/" +  (values.repoUrl | parseRepoUrl).repo }}
 spec:
     type: flogo
-    lifecycle: production
+    lifecycle: development
     owner: ${{ values.owner }}
 {%- if(values.flogo_ems_queue_senders.length) or (values.flogo_ems_queue_receivers.length) %}
     dependsOn:

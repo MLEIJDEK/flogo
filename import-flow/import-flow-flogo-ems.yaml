@@ -47,6 +47,7 @@ spec:
           ui:options:
             allowedKinds:
               - Group
+  # MLE: added user
               - User
 
   # The import flow consist out of 4 steps:
@@ -57,7 +58,7 @@ spec:
 
   steps:
     - id: fetch
-      name: Fetch project Michel
+      name: Fetch Flogo project 
       action: fetch:plain
       input:
         url: ${{ "https://"  + (parameters.repoUrl | parseRepoUrl).host + "/" + (parameters.repoUrl | parseRepoUrl).owner + "/" +  (parameters.repoUrl | parseRepoUrl).repo }}
@@ -92,6 +93,7 @@ spec:
             type: json
             filePath: ${{ parameters.application_folder + "/" + parameters.application }}
             jsonPath: "$.resources[*].data.tasks[*]"
+    
     # The import flow debug step, enable it for debugging
     - id: log-debug
       name: Debug Logs
