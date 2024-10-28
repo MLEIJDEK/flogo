@@ -11,6 +11,7 @@ metadata:
     - tibco
     - template
     - developer-hub
+    - flogo
   lifecycle:
     - production
     - development
