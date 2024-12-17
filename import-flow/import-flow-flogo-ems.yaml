@@ -17,7 +17,7 @@ metadata:
     - deprecated
     - test
 spec:
-  owner: group:default/tibco-imported
+  owner: user:default/michel.leijdekker
   type: import-flow
 
   parameters:

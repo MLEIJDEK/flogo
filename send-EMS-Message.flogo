@@ -9,7 +9,7 @@
     "github.com/tibco/flogo-ems/src/app/EMS/connector/ems"
   ],
   "name": "MLE_Send-EMS-Msg",
-  "description": "",
+  "description": "Add description",
   "version": "1.0.0",
   "type": "flogo:app",
   "appModel": "1.1.1",
@@ -236,7 +236,7 @@
             }
           }
         ],
-        "fe_metadata": "eyJTdGFydEFjdGl2aXR5Ijp7IngiOjEwMCwieSI6OTl9LCJFTVNTZW5kTWVzc2FnZSI6eyJ4IjoyNzUsInkiOjkxfSwiQ29uZmlndXJlSFRUUFJlc3BvbnNlIjp7IngiOjQ4OCwieSI6OTN9LCJSZXBseVRvVHJpZ2dlciI6eyJ4Ijo3MTAsInkiOjkzfX0=",
+        "fe_metadata": "eyJTdGFydEFjdGl2aXR5Ijp7IngiOjEwMCwieSI6OTl9LCJFTVNTZW5kTWVzc2FnZSI6eyJ4IjoyNjksInkiOjg3fSwiQ29uZmlndXJlSFRUUFJlc3BvbnNlIjp7IngiOjQ4NiwieSI6ODh9LCJSZXBseVRvVHJpZ2dlciI6eyJ4Ijo3MTIsInkiOjg3fX0=",
         "metadata": {
           "input": [
             {
@@ -296,12 +296,12 @@
     {
       "name": "EMS.DP4_EMS.User_Name",
       "type": "string",
-      "value": "michel.leijdekker@cloud.com"
+      "value": "admin"
     },
     {
       "name": "EMS.DP4_EMS.Password",
       "type": "string",
-      "value": "SECRET:/VQm8oUKhBmu5Hflh3nRoK3LrhWWN3NDA5IPYw=="
+      "value": ""
     },
     {
       "name": "EMS.DP4_EMS.Reconnect_Count",
