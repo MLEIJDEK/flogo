@@ -16,6 +16,8 @@ metadata:
     links:
       - title: TIBCO Flogo Enterprise
         url: https://docs.tibco.com/products/tibco-flogo-enterprise
+      - title: Deployed Application
+        url: https://tibcoatseuwe1.eu-west.my.tibco.com/cp/flogo/appdetails/endpoints?dp_id=cq1duk2jcp26pefl1d60&capability_instance_id=cq1ekso6c9lo9im24qlg&app_id=crps614bp2ppslobqc00
     annotations:
       github.com/project-slug: https://github.com/MLEIJDEK/flogo
       backstage.io/techdocs-ref: dir:.
