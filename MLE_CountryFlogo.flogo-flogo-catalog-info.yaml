@@ -13,5 +13,5 @@ metadata:
     backstage.io/techdocs-ref: dir:.
 spec:
   type: flogo
-  lifecycle: production
-  owner: group:default/tibco-templates
+  lifecycle: development
+  owner: user:default/michel.leijdekker
