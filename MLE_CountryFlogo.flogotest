@@ -1,0 +1,31 @@
+{
+  "suites": {
+    "Testsuite_1": {
+      "id": "Testsuite_1",
+      "name": "Testsuite_1",
+      "disabled": false,
+      "tests": [
+        "getCountryInfo:Test1"
+      ]
+    }
+  },
+  "tests": {
+    "getCountryInfo:Test1": {
+      "name": "Test1",
+      "flowId": "flow:getCountryInfo",
+      "flowName": "getCountryInfo",
+      "description": "test\n",
+      "flowInputs": {
+        "pathParams": {
+          "code": "nl"
+        }
+      }
+    }
+  },
+  "type": "flogo:unittest",
+  "model": "1.1.1",
+  "app": {
+    "name": "MLE_CountryFlogo",
+    "version": "1.0.0"
+  }
+}

@@ -10,7 +10,7 @@
   ],
   "name": "MLE_Send-EMS-Msg",
   "description": "",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "flogo:app",
   "appModel": "1.1.1",
   "tags": [],
@@ -70,14 +70,12 @@
               "responseBody": {
                 "type": "json",
                 "value": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}",
-                "fe_metadata": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}",
-                "feSchemaMap": {}
+                "fe_metadata": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}"
               },
               "responseCodesSchema": {
                 "type": "json",
                 "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"number\"},\"responseType\":{\"type\":\"string\"},\"responseSchema\":{\"type\":\"string\"}}}}",
-                "fe_metadata": "[{\"code\":200,\"responseType\":\"object\",\"responseSchema\":\"{\\\"response\\\":\\\"string\\\"}\"}]",
-                "feSchemaMap": {}
+                "fe_metadata": "[{\"code\":200,\"responseType\":\"object\",\"responseSchema\":\"{\\\"response\\\":\\\"string\\\"}\"}]"
               }
             },
             "output": {
@@ -89,20 +87,17 @@
               "body": {
                 "type": "json",
                 "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"InputMessage\":{\"type\":\"string\"}}}",
-                "fe_metadata": "{\"InputMessage\":\"string\"}",
-                "feSchemaMap": {}
+                "fe_metadata": "{\"InputMessage\":\"string\"}"
               },
               "multipartFormData": {
                 "type": "json",
                 "value": "{\"type\":\"object\",\"properties\":{}}",
-                "fe_metadata": "{\"type\":\"object\",\"properties\":{}}",
-                "feSchemaMap": {}
+                "fe_metadata": "{\"type\":\"object\",\"properties\":{}}"
               },
               "multipartForm": {
                 "type": "json",
                 "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{}}",
-                "fe_metadata": "[]",
-                "feSchemaMap": {}
+                "fe_metadata": "[]"
               }
             }
           },
@@ -170,11 +165,11 @@
                   "headers": {
                     "type": "json",
                     "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"correlationID\":{\"type\":\"string\"},\"replyTo\":{\"type\":\"string\"},\"deliveryMode\":{\"type\":\"string\"},\"expiration\":{\"type\":\"integer\"},\"priority\":{\"type\":\"integer\"}}}",
-                    "fe_metadata": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"correlationID\":{\"type\":\"string\"},\"replyTo\":{\"type\":\"string\"},\"deliveryMode\":{\"type\":\"string\"},\"expiration\":{\"type\":\"integer\"},\"priority\":{\"type\":\"integer\"}}}",
-                    "feSchemaMap": {}
+                    "fe_metadata": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"correlationID\":{\"type\":\"string\"},\"replyTo\":{\"type\":\"string\"},\"deliveryMode\":{\"type\":\"string\"},\"expiration\":{\"type\":\"integer\"},\"priority\":{\"type\":\"integer\"}}}"
                   }
                 }
-              }
+              },
+              "feSchemaMap": {}
             }
           },
           {
@@ -199,19 +194,18 @@
                   "input": {
                     "type": "json",
                     "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"object\",\"properties\":{\"response\":{\"type\":\"string\"}}}}}",
-                    "fe_metadata": "{\"body\":{\"response\":\"string\"}}",
-                    "feSchemaMap": {}
+                    "fe_metadata": "{\"body\":{\"response\":\"string\"}}"
                   }
                 },
                 "output": {
                   "response": {
                     "type": "json",
                     "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"object\",\"properties\":{\"response\":{\"type\":\"string\"}}}}}",
-                    "fe_metadata": "{\"body\":{\"response\":\"string\"}}",
-                    "feSchemaMap": {}
+                    "fe_metadata": "{\"body\":{\"response\":\"string\"}}"
                   }
                 }
-              }
+              },
+              "feSchemaMap": {}
             }
           },
           {
@@ -233,11 +227,11 @@
                   "reply": {
                     "type": "json",
                     "value": "{\"type\":\"object\",\"title\":\"Inputs\",\"properties\":{\"code\":{\"type\":\"integer\",\"required\":false},\"responseBody\":{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}},\"required\":[]}",
-                    "fe_metadata": "{\"type\":\"object\",\"title\":\"Inputs\",\"properties\":{\"code\":{\"type\":\"integer\",\"required\":false},\"responseBody\":{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}},\"required\":[]}",
-                    "feSchemaMap": {}
+                    "fe_metadata": "{\"type\":\"object\",\"title\":\"Inputs\",\"properties\":{\"code\":{\"type\":\"integer\",\"required\":false},\"responseBody\":{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}},\"required\":[]}"
                   }
                 }
-              }
+              },
+              "feSchemaMap": {}
             }
           }
         ],
@@ -306,7 +300,7 @@
     {
       "name": "EMS.DP4_EMS.Password",
       "type": "string",
-      "value": "SECRET:Bj84reh0jFF9ILYl48dUmhiRCDNun7jET3nWyA=="
+      "value": "SECRET:dfhhA+rmokQGi1yqUJVxlTOKY5IpoLYkT6miFA=="
     },
     {
       "name": "EMS.DP4_EMS.Reconnect_Count",
@@ -348,7 +342,7 @@
       }
     }
   },
-  "contrib": "W3sicmVmIjoiZ2l0aHViLmNvbS90aWJjby9mbG9nby1nZW5lcmFsL3NyYy9hcHAvR2VuZXJhbCIsImlkIjoiR2VuZXJhbCIsInZlcnNpb24iOiIxLjYuMiIsInRhZyI6IjEuNi4yLWIwMiIsIm5hbWUiOiJHZW5lcmFsIiwiczNsb2NhdGlvbiI6IlRpYmNvL0dlbmVyYWwiLCJpc1VzZXJFeHRlbnNpb24iOmZhbHNlfSx7InJlZiI6ImdpdGh1Yi5jb20vdGliY28vZmxvZ28tZW1zL3NyYy9hcHAvRU1TIiwiaWQiOiJFTVMiLCJ2ZXJzaW9uIjoiMS4wLjAiLCJ0YWciOiIxLjAuMC1iMTMiLCJuYW1lIjoiVElCQ08gRW50ZXJwcmlzZSBNZXNzYWdlIFNlcnZpY2UiLCJzM2xvY2F0aW9uIjoiVGliY28vRU1TIiwiaXNVc2VyRXh0ZW5zaW9uIjpmYWxzZX1d",
+  "contrib": "W3sicmVmIjoiZ2l0aHViLmNvbS90aWJjby9mbG9nby1nZW5lcmFsL3NyYy9hcHAvR2VuZXJhbCIsImlkIjoiR2VuZXJhbCIsInZlcnNpb24iOiIxLjYuNCIsInRhZyI6IjEuNi40LWIwMiIsIm5hbWUiOiJHZW5lcmFsIiwiczNsb2NhdGlvbiI6IlRpYmNvL0dlbmVyYWwiLCJpc1VzZXJFeHRlbnNpb24iOmZhbHNlfSx7InJlZiI6ImdpdGh1Yi5jb20vdGliY28vZmxvZ28tZW1zL3NyYy9hcHAvRU1TIiwiaWQiOiJFTVMiLCJ2ZXJzaW9uIjoiMS4wLjAiLCJ0YWciOiIxLjAuMC1iMTMiLCJuYW1lIjoiVElCQ08gRW50ZXJwcmlzZSBNZXNzYWdlIFNlcnZpY2UiLCJzM2xvY2F0aW9uIjoiVGliY28vRU1TIiwiaXNVc2VyRXh0ZW5zaW9uIjpmYWxzZX1d",
   "metadata": {
     "endpoints": [
       {
@@ -422,6 +416,6 @@
         }
       }
     ],
-    "flogoVersion": "2.25.1"
+    "flogoVersion": "2.25.3"
   }
 }
