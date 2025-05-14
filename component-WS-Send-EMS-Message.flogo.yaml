@@ -34,6 +34,6 @@ spec:
     dependsOn:
       - resource:default/Workshop_Topic_EMS_TOPIC
       - resource:default/WS_Send-EMS-Msg_StartActivity_FLOGO_TASK
-      - resource:default/WS_Send-EMS-Msg_EMSSendMessage_FLOGO_TASK
-      - resource:default/WS_Send-EMS-Msg_ConfigureHTTPResponse_FLOGO_TASK
+      - resource:default/WS-Send-EMS-Msg_EMSSendMessage_FLOGO_TASK
+      - resource:default/WS-Send-EMS-Msg_ConfigureHTTPResponse_FLOGO_TASK
       - resource:default/WS-Send-EMS-Msg_ReplyToTrigger_FLOGO_TASK
