@@ -23,9 +23,7 @@ metadata:
         appId: cume07a7s9bmf6nsijbg
     links:
       - title: TIBCO Flogo Enterprise
-        url: https://docs.tibco.com/products/tibco-flogo-enterprise
-      - title: Deployed Application
-        url: https://tibcoatseuwe1.eu-west.my.tibco.com/cp/flogo/appdetails/endpoints?dp_id=cq1duk2jcp26pefl1d60&capability_instance_id=cq1ekso6c9lo9im24qlg&app_id=crps614bp2ppslobqc00
+        url: https://docs.tibco.com/products/tibco-flogo-enterprise      
     annotations:
       github.com/project-slug: https://github.com/MLEIJDEK/flogo
       backstage.io/techdocs-ref: dir:.
@@ -38,5 +36,4 @@ spec:
       - resource:default/WS_Send-EMS-Msg_StartActivity_FLOGO_TASK
       - resource:default/WS_Send-EMS-Msg_EMSSendMessage_FLOGO_TASK
       - resource:default/WS_Send-EMS-Msg_ConfigureHTTPResponse_FLOGO_TASK
-      - resource:default/WS_Send-EMS-Msg_ReplyToTrigger_FLOGO_TASK
-
+      - resource:default/WS-Send-EMS-Msg_ReplyToTrigger_FLOGO_TASK
