@@ -13,6 +13,7 @@ metadata:
     name: MLE_Send-EMS-Msg_FLOGO_APP
     tags:
       - flogo-app
+      - platform
     tibcoPlatformApps:
       - appType: flogo
         appName: MLE_Send-EMS-Msg
