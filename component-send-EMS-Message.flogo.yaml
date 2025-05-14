@@ -13,6 +13,13 @@ metadata:
     name: MLE_Send-EMS-Msg_FLOGO_APP
     tags:
       - flogo-app
+    tibcoPlatformApps:
+      - appType: Flogo
+        appName: MLE_Send-EMS-Msg
+        dataPlaneName: DP4_PresalesNL
+        dpId: cq1duk2jcp26pefl1d60
+        capabilityInstanceId: cq1ekso6c9lo9im24qlg
+        appId: crps614bp2ppslobqc00
     links:
       - title: TIBCO Flogo Enterprise
         url: https://docs.tibco.com/products/tibco-flogo-enterprise
