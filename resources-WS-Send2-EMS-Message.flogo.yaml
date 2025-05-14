@@ -11,7 +11,7 @@
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
-  name: WS-Send-EMS-Msg_StartActivity_FLOGO_TASK
+  name: WS_Send-EMS-Msg_StartActivity_FLOGO_TASK
   description: NoOp Activity
   tags:
     - flogo-task
@@ -19,7 +19,7 @@ spec:
   type: flogo-task
   lifecycle: development
   owner: user:default/michel.leijdekker
-  dependsOn: ['component:default/WS-Send-EMS-Msg_FLOGO_APP']
+  dependsOn: ['component:default/WS_Send-EMS-Msg_FLOGO_APP']
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Resource
@@ -31,7 +31,7 @@ spec:
   type: flogo-task
   lifecycle: development
   owner: user:default/michel.leijdekker
-  dependsOn: ['component:default/WS-Send-EMS-Msg_FLOGO_APP']
+  dependsOn: ['component:default/WS_Send-EMS-Msg_FLOGO_APP']
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Resource
@@ -44,7 +44,7 @@ spec:
   type: flogo-task
   lifecycle: development
   owner: user:default/michel.leijdekker
-  dependsOn: ['component:default/WS-Send-EMS-Msg_FLOGO_APP']
+  dependsOn: ['component:default/WS_Send-EMS-Msg_FLOGO_APP']
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Resource
