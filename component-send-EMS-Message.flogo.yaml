@@ -14,7 +14,7 @@ metadata:
     tags:
       - flogo-app
     tibcoPlatformApps:
-      - appType: Flogo
+      - appType: flogo
         appName: MLE_Send-EMS-Msg
         dataPlaneName: DP4_PresalesNL
         dpId: cq1duk2jcp26pefl1d60
