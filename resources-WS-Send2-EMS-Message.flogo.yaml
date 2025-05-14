@@ -57,4 +57,4 @@ spec:
   type: flogo-task
   lifecycle: development
   owner: user:default/michel.leijdekker
-  dependsOn: ['component:default/WS-Send-EMS-Msg_FLOGO_APP']
+  dependsOn: ['component:default/WS_Send-EMS-Msg_FLOGO_APP']
