@@ -12,6 +12,7 @@ metadata:
     - template
     - developer-hub
     - flogo
+    - devhub-marketplace
   lifecycle:
     - production
     - development
