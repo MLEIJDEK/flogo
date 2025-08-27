@@ -25,8 +25,11 @@
         {
           "description": "",
           "settings": {
+            "processingMode": "Sync",
             "destinationType": "Queue",
             "destination": "MLE_Demo",
+            "durableSubscriber": false,
+            "sharedDurableSubscriber": false,
             "ackMode": "Auto"
           },
           "action": {
@@ -44,8 +47,7 @@
               "headers": {
                 "type": "json",
                 "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"destination\":{\"type\":\"string\"},\"replyTo\":{\"type\":\"string\"},\"deliveryMode\":{\"type\":\"string\"},\"messageID\":{\"type\":\"string\"},\"timestamp\":{\"type\":\"integer\"},\"expiration\":{\"type\":\"integer\"},\"reDelivered\":{\"type\":\"boolean\"},\"priority\":{\"type\":\"integer\"},\"correlationID\":{\"type\":\"string\"}}}",
-                "fe_metadata": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"destination\":{\"type\":\"string\"},\"replyTo\":{\"type\":\"string\"},\"deliveryMode\":{\"type\":\"string\"},\"messageID\":{\"type\":\"string\"},\"timestamp\":{\"type\":\"integer\"},\"expiration\":{\"type\":\"integer\"},\"reDelivered\":{\"type\":\"boolean\"},\"priority\":{\"type\":\"integer\"},\"correlationID\":{\"type\":\"string\"}}}",
-                "feSchemaMap": {}
+                "fe_metadata": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"destination\":{\"type\":\"string\"},\"replyTo\":{\"type\":\"string\"},\"deliveryMode\":{\"type\":\"string\"},\"messageID\":{\"type\":\"string\"},\"timestamp\":{\"type\":\"integer\"},\"expiration\":{\"type\":\"integer\"},\"reDelivered\":{\"type\":\"boolean\"},\"priority\":{\"type\":\"integer\"},\"correlationID\":{\"type\":\"string\"}}}"
               }
             }
           },
@@ -141,7 +143,7 @@
     {
       "name": "EMS.DP4_EMS.Password",
       "type": "string",
-      "value": "SECRET:2W7wkyTB/deBgWHIwU1ll6Dn+6A1RWXl5McOpg=="
+      "value": "SECRET:MShhHlywHS4K11md451LtGPlp1tqXrTwZbuQig=="
     },
     {
       "name": "EMS.DP4_EMS.Reconnect_Count",
@@ -157,6 +159,10 @@
       "name": "EMS.DP4_EMS.Retry_Timeout",
       "type": "float64",
       "value": 0
+    },
+    {
+      "name": "EMS.DP4_EMS.Client_ID",
+      "type": "string"
     }
   ],
   "connections": {
@@ -172,6 +178,8 @@
         "authenticationMode": "None",
         "userName": "=$property[\"EMS.DP4_EMS.User_Name\"]",
         "password": "=$property[\"EMS.DP4_EMS.Password\"]",
+        "clientID": "=$property[\"EMS.DP4_EMS.Client_ID\"]",
+        "enablemTLS": true,
         "clientCert": "",
         "clientKey": "",
         "caCert": "",
@@ -183,9 +191,9 @@
       }
     }
   },
-  "contrib": "W3sicmVmIjoiZ2l0aHViLmNvbS90aWJjby9mbG9nby1lbXMvc3JjL2FwcC9FTVMiLCJpZCI6IkVNUyIsInZlcnNpb24iOiIxLjAuMCIsInRhZyI6IjEuMC4wLWIxMyIsIm5hbWUiOiJUSUJDTyBFbnRlcnByaXNlIE1lc3NhZ2UgU2VydmljZSIsInMzbG9jYXRpb24iOiJUaWJjby9FTVMiLCJpc1VzZXJFeHRlbnNpb24iOmZhbHNlfSx7InJlZiI6ImdpdGh1Yi5jb20vdGliY28vZmxvZ28tZ2VuZXJhbC9zcmMvYXBwL0dlbmVyYWwiLCJpZCI6IkdlbmVyYWwiLCJ2ZXJzaW9uIjoiMS42LjIiLCJ0YWciOiIxLjYuMi1iMDIiLCJuYW1lIjoiR2VuZXJhbCIsInMzbG9jYXRpb24iOiJUaWJjby9HZW5lcmFsIiwiaXNVc2VyRXh0ZW5zaW9uIjpmYWxzZX1d",
+  "contrib": "W3sicmVmIjoiZ2l0aHViLmNvbS90aWJjby9mbG9nby1lbXMvc3JjL2FwcC9FTVMiLCJpZCI6IkVNUyIsInZlcnNpb24iOiIxLjAuMi1IRjEiLCJ0YWciOiIxLjAuMi1oZjEtYjAyIiwibmFtZSI6IlRJQkNPIEVudGVycHJpc2UgTWVzc2FnZSBTZXJ2aWNlIiwiczNsb2NhdGlvbiI6IlRpYmNvL0VNUyIsImlzVXNlckV4dGVuc2lvbiI6ZmFsc2V9LHsicmVmIjoiZ2l0aHViLmNvbS90aWJjby9mbG9nby1nZW5lcmFsL3NyYy9hcHAvR2VuZXJhbCIsImlkIjoiR2VuZXJhbCIsInZlcnNpb24iOiIxLjYuNyIsInRhZyI6IjEuNi43LWIwMyIsIm5hbWUiOiJHZW5lcmFsIiwiczNsb2NhdGlvbiI6IlRpYmNvL0dlbmVyYWwiLCJpc1VzZXJFeHRlbnNpb24iOmZhbHNlfV0=",
   "metadata": {
     "endpoints": [],
-    "flogoVersion": "2.25.1"
+    "flogoVersion": "2.25.7"
   }
 }

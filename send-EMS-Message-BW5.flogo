@@ -8,7 +8,7 @@
     "github.com/tibco/flogo-general/src/app/General/trigger/rest",
     "github.com/tibco/flogo-ems/src/app/EMS/connector/ems"
   ],
-  "name": "MLE_Send-EMS-Msg",
+  "name": "MLE_Send-EMS-Msg-BW5",
   "description": "",
   "version": "1.0.0",
   "type": "flogo:app",
@@ -79,11 +79,6 @@
               }
             },
             "output": {
-              "headers": {
-                "type": "json",
-                "value": "{\"type\":\"object\",\"properties\":{\"Accept\":{\"type\":\"string\",\"visible\":false},\"Accept-Charset\":{\"type\":\"string\",\"visible\":false},\"Accept-Encoding\":{\"type\":\"string\",\"visible\":false},\"Content-Type\":{\"type\":\"string\",\"visible\":false},\"Content-Length\":{\"type\":\"string\",\"visible\":false},\"Connection\":{\"type\":\"string\",\"visible\":false},\"Cookie\":{\"type\":\"string\",\"visible\":false},\"Pragma\":{\"type\":\"string\",\"visible\":false}},\"required\":[]}",
-                "fe_metadata": "[{\"parameterName\":\"Accept\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Charset\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Encoding\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Type\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Length\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Connection\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Cookie\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Pragma\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false}]"
-              },
               "body": {
                 "type": "json",
                 "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"InputMessage\":{\"type\":\"string\"}}}",
@@ -147,13 +142,13 @@
           {
             "id": "EMSSendMessage",
             "name": "EMSSendMessage",
-            "description": "",
+            "description": "This activity sends message to the specified EMS destination",
             "activity": {
               "ref": "#sendmessage",
               "settings": {
                 "connection": "conn://43a40201-5d92-40a1-a884-157031567b36",
                 "destinationType": "Queue",
-                "settingDestination": "MLE_Demo",
+                "settingDestination": "bw5.test",
                 "deliveryDelay": 0
               },
               "input": {
@@ -166,6 +161,11 @@
                     "type": "json",
                     "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"correlationID\":{\"type\":\"string\"},\"replyTo\":{\"type\":\"string\"},\"deliveryMode\":{\"type\":\"string\"},\"expiration\":{\"type\":\"integer\"},\"priority\":{\"type\":\"integer\"}}}",
                     "fe_metadata": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"correlationID\":{\"type\":\"string\"},\"replyTo\":{\"type\":\"string\"},\"deliveryMode\":{\"type\":\"string\"},\"expiration\":{\"type\":\"integer\"},\"priority\":{\"type\":\"integer\"}}}"
+                  },
+                  "messageProperties": {
+                    "type": "json",
+                    "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"property\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"value\":{\"type\":\"string\"},\"type\":{\"type\":\"string\"}},\"required\":[\"name\",\"value\"]}}}}",
+                    "fe_metadata": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"property\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"value\":{\"type\":\"string\"},\"type\":{\"type\":\"string\"}},\"required\":[\"name\",\"value\"]}}}}"
                   }
                 }
               },
@@ -290,17 +290,22 @@
     {
       "name": "EMS.DP4_EMS.ServerUrl",
       "type": "string",
-      "value": "tcp://emsdemo-emsactive.nlpresales-ns.svc:9011,tcp://emsdemo-ems.nlpresales-ns.svc:9011"
+      "value": "tcp://emsserver15-emsactive.nlpresales-ns.svc:9011,tcp://emsserver15-ems.nlpresales-ns.svc:9011"
     },
     {
       "name": "EMS.DP4_EMS.User_Name",
       "type": "string",
-      "value": "michel.leijdekker@cloud.com"
+      "value": "admin"
     },
     {
       "name": "EMS.DP4_EMS.Password",
       "type": "string",
-      "value": "SECRET:oYlcnvatAckiGdb1rn1vT9I1bKdPmvz1q/fkjg=="
+      "value": ""
+    },
+    {
+      "name": "EMS.DP4_EMS.Client_ID",
+      "type": "string",
+      "value": ""
     },
     {
       "name": "EMS.DP4_EMS.Reconnect_Count",
@@ -316,10 +321,6 @@
       "name": "EMS.DP4_EMS.Retry_Timeout",
       "type": "float64",
       "value": 0
-    },
-    {
-      "name": "EMS.DP4_EMS.Client_ID",
-      "type": "string"
     }
   ],
   "connections": {
@@ -355,14 +356,14 @@
         "protocol": "http",
         "port": "9999",
         "spec": {
-          "name": "MLE_Send-EMS-Msg",
+          "name": "MLE_Send-EMS-Msg-BW5",
           "version": "1.0.0"
         },
         "title": "ReceiveHTTPMessage",
         "swagger": {
           "openapi": "3.0.0",
           "info": {
-            "title": "MLE_Send-EMS-Msg",
+            "title": "MLE_Send-EMS-Msg-BW5",
             "version": "1.0.0",
             "description": "Simple REST Trigger"
           },
