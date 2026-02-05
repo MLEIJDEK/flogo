@@ -1,0 +1,242 @@
+{
+  "imports": [
+    "github.com/project-flogo/flow",
+    "github.com/project-flogo/contrib/activity/noop",
+    "github.com/tibco/flogo-ai-agent/src/app/AgenticAI/activity/agentactivity",
+    "github.com/tibco/flogo-general/src/app/General/activity/log",
+    "github.com/tibco/flogo-mail/Mail/trigger/imappoller",
+    "github.com/project-flogo/contrib/function/array",
+    "github.com/tibco/flogo-mail/Mail/connector/imap",
+    "github.com/tibco/flogo-ai-agent/src/app/AgenticAI/connector/llmprovider"
+  ],
+  "name": "EmailTestFlow",
+  "description": "",
+  "version": "1.0.0",
+  "type": "flogo:app",
+  "appModel": "1.1.1",
+  "tags": [],
+  "triggers": [
+    {
+      "ref": "#imappoller",
+      "name": "flogo-imap-mailpoller",
+      "description": "Simple IMAP Mail Poller",
+      "settings": {
+        "imapConnection": "conn://a5213d25-14b5-4a3a-920b-b2a4f7c47144"
+      },
+      "id": "IMAPMailPoller",
+      "handlers": [
+        {
+          "description": "",
+          "settings": {
+            "mailBoxName": "Inbox",
+            "pollingInterval": "1m",
+            "searchKeys": "UNSEEN",
+            "batchSize": 1,
+            "readBody": true,
+            "markAsRead": false,
+            "deleteAfterRead": false
+          },
+          "action": {
+            "ref": "github.com/project-flogo/flow",
+            "settings": {
+              "flowURI": "res://flow:TestEmailTrigger"
+            },
+            "input": {
+              "Mails": {
+                "mapping": {
+                  "@foreach($.Mails,Mails)": {
+                    "=": "$loop"
+                  }
+                }
+              }
+            }
+          },
+          "schemas": {
+            "output": {
+              "Mails": {
+                "type": "json",
+                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"from\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"address\":{\"type\":\"string\"}}},\"to\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"address\":{\"type\":\"string\"}}}},\"cc\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"address\":{\"type\":\"string\"}}}},\"bcc\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"address\":{\"type\":\"string\"}}}},\"date\":{\"type\":\"string\"},\"precedence\":{\"type\":\"string\"},\"subject\":{\"type\":\"string\"},\"body\":{\"type\":\"string\"},\"flags\":{\"type\":\"array\",\"items\":{}},\"attachments\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"type\":{\"type\":\"string\"},\"data\":{\"type\":\"string\"}}}}}}}",
+                "fe_metadata": "[{\"from\":{\"name\":\"\",\"address\":\"\"},\"to\":[{\"name\":\"\",\"address\":\"\"}],\"cc\":[{\"name\":\"\",\"address\":\"\"}],\"bcc\":[{\"name\":\"\",\"address\":\"\"}],\"date\":\"\",\"precedence\":\"\",\"subject\":\"\",\"body\":\"\",\"flags\":[],\"attachments\":[{\"name\":\"\",\"type\":\"\",\"data\":\"\"}]}]"
+              }
+            }
+          },
+          "name": "TestEmailTrigger"
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "id": "flow:TestEmailTrigger",
+      "data": {
+        "name": "TestEmailTrigger",
+        "description": "",
+        "links": [
+          {
+            "id": 1,
+            "from": "StartActivity",
+            "to": "AgentActivity",
+            "type": "label",
+            "label": "StartActivity to AgentActivity"
+          },
+          {
+            "id": 2,
+            "from": "AgentActivity",
+            "to": "LogMessage",
+            "type": "label",
+            "label": "AgentActivity to LogMessage"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "StartActivity",
+            "name": "StartActivity",
+            "description": "NoOp Activity",
+            "activity": {
+              "ref": "#noop"
+            }
+          },
+          {
+            "id": "AgentActivity",
+            "name": "AgentActivity",
+            "description": "Configure Agent in the flow",
+            "activity": {
+              "ref": "#agentactivity",
+              "settings": {
+                "llmProviderConnection": "conn://d805e88b-f8ac-4f11-9711-da5bcc2180ba",
+                "model": "Sonnet 4.5",
+                "reasoning": "minimal",
+                "temperature": 0.7,
+                "enableGuardrails": false,
+                "rateLimit": 25,
+                "tokenLimit": 2048,
+                "redactSensitiveData": false,
+                "responseType": "Text",
+                "agentHandoffs": "",
+                "mcpServers": "=$property[\"MCPServers\"]",
+                "conversationStoreType": "Memory",
+                "memoryMaxSize": 10,
+                "systemPrompt": "\"You are a helpful assistant\""
+              },
+              "input": {
+                "userPrompt": "Read the email and collect additional application information",
+                "conversationId": ""
+              }
+            }
+          },
+          {
+            "id": "LogMessage",
+            "name": "LogMessage",
+            "description": "Simple Log Message Activity",
+            "activity": {
+              "ref": "#log",
+              "input": {
+                "Log Level": "INFO",
+                "flowInfo": false,
+                "message": "Email Received",
+                "logLevel": ""
+              }
+            }
+          }
+        ],
+        "fe_metadata": "eyJTdGFydEFjdGl2aXR5Ijp7IngiOjEwMCwieSI6MTAwfSwiQWdlbnRBY3Rpdml0eSI6eyJ4IjoyMjAsInkiOjg5fSwiTG9nTWVzc2FnZSI6eyJ4Ijo0NDMsInkiOjg5fX0=",
+        "metadata": {
+          "input": [
+            {
+              "name": "Mails",
+              "type": "array",
+              "schema": {
+                "type": "json",
+                "value": "{\"type\":\"object\",\"properties\":{\"from\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"address\":{\"type\":\"string\"}}},\"to\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"address\":{\"type\":\"string\"}}}},\"cc\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"address\":{\"type\":\"string\"}}}},\"bcc\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"address\":{\"type\":\"string\"}}}},\"date\":{\"type\":\"string\"},\"precedence\":{\"type\":\"string\"},\"subject\":{\"type\":\"string\"},\"body\":{\"type\":\"string\"},\"flags\":{\"type\":\"array\",\"items\":{}},\"attachments\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"type\":{\"type\":\"string\"},\"data\":{\"type\":\"string\"}}}}}}"
+              }
+            }
+          ],
+          "output": [],
+          "fe_metadata": {
+            "input": "{\"type\":\"object\",\"title\":\"IMAPMailPoller\",\"properties\":{\"Mails\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"from\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"address\":{\"type\":\"string\"}}},\"to\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"address\":{\"type\":\"string\"}}}},\"cc\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"address\":{\"type\":\"string\"}}}},\"bcc\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"address\":{\"type\":\"string\"}}}},\"date\":{\"type\":\"string\"},\"precedence\":{\"type\":\"string\"},\"subject\":{\"type\":\"string\"},\"body\":{\"type\":\"string\"},\"flags\":{\"type\":\"array\",\"items\":{}},\"attachments\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"type\":{\"type\":\"string\"},\"data\":{\"type\":\"string\"}}}}}}}}}"
+          }
+        }
+      }
+    }
+  ],
+  "properties": [
+    {
+      "name": "Mail.Ziggo.IMAP_Mail_Server",
+      "type": "string",
+      "value": "imap.ziggo.nl:993"
+    },
+    {
+      "name": "Mail.Ziggo.Username",
+      "type": "string",
+      "value": "mle.platform@ziggo.nl"
+    },
+    {
+      "name": "Mail.Ziggo.Password",
+      "type": "string",
+      "value": "SECRET:09K3wyi6Tr7G1qgqG6KYk70YpLKGVsXYsSkniQ=="
+    },
+    {
+      "name": "AgenticAI.Claude.LLM_Provider",
+      "type": "string",
+      "value": "Anthropic"
+    },
+    {
+      "name": "AgenticAI.Claude.API_Key",
+      "type": "string",
+      "value": "SECRET:S5gW4XcjB4/7Zyez+8tKY7mxb5tk7r8YJfZrdgfvDC5kNTKAWX/n8KxjmexFQhAXUHCHpblgO9tMZtwapOy9N43+IBbbCjilKqFrWwd2Qvlqr82JxOjGhAbR3kGUoR3CLYeElvSDdGVSdGXCsNm7Xngv7YjLAhSqWYv/Zg=="
+    },
+    {
+      "name": "AgenticAI.Claude.LLM_Base_URL",
+      "type": "string",
+      "value": "https://api.anthropic.com"
+    },
+    {
+      "name": "MCPServers",
+      "type": "string",
+      "value": "file:\\\\C:\\Users\\miche\\Documents\\GitHub\\flogo\\mcp.json"
+    }
+  ],
+  "connections": {
+    "a5213d25-14b5-4a3a-920b-b2a4f7c47144": {
+      "id": "a5213d25-14b5-4a3a-920b-b2a4f7c47144",
+      "name": "Ziggo",
+      "ref": "#imap",
+      "isGlobal": false,
+      "settings": {
+        "name": "Ziggo",
+        "server": "=$property[\"Mail.Ziggo.IMAP_Mail_Server\"]",
+        "authType": "Basic",
+        "secureConnection": true,
+        "username": "=$property[\"Mail.Ziggo.Username\"]",
+        "password": "=$property[\"Mail.Ziggo.Password\"]",
+        "callbackURL": "https://vscode.dev/redirect",
+        "authURL": "",
+        "authQueryParameters": "",
+        "accessTokenURL": "",
+        "clientId": "",
+        "clientSecret": "",
+        "scope": "",
+        "audience": "",
+        "WI_STUDIO_OAUTH_CONNECTOR_INFO": ""
+      }
+    },
+    "d805e88b-f8ac-4f11-9711-da5bcc2180ba": {
+      "id": "d805e88b-f8ac-4f11-9711-da5bcc2180ba",
+      "name": "Claude",
+      "ref": "#llmprovider",
+      "isGlobal": false,
+      "settings": {
+        "name": "Claude",
+        "description": "Claude Connection",
+        "llmProvider": "=$property[\"AgenticAI.Claude.LLM_Provider\"]",
+        "apiKey": "=$property[\"AgenticAI.Claude.API_Key\"]",
+        "llmProviderUrl": "=$property[\"AgenticAI.Claude.LLM_Base_URL\"]"
+      }
+    }
+  },
+  "contrib": "W3sicmVmIjoiZ2l0aHViLmNvbS90aWJjby9mbG9nby1tYWlsL01haWwiLCJpZCI6Ik1haWwiLCJ2ZXJzaW9uIjoiMC45LjAiLCJ0YWciOiIwLjkuMCIsIm5hbWUiOiJNYWlsIiwiczNsb2NhdGlvbiI6IntVU0VSSUR9L01haWwiLCJpc1VzZXJFeHRlbnNpb24iOnRydWV9LHsicmVmIjoiZ2l0aHViLmNvbS90aWJjby9mbG9nby1haS1hZ2VudC9zcmMvYXBwL0FnZW50aWNBSSIsImlkIjoiQWdlbnRpY0FJIiwidmVyc2lvbiI6IjAuOS4wIiwidGFnIjoiMC45LjAtYjIxLTAuOS4wIiwibmFtZSI6IkFnZW50aWMgQUkgRGV2ZWxvcGVyIFByZXZpZXciLCJzM2xvY2F0aW9uIjoiVGliY28vQWdlbnRpY0FJIiwiaXNVc2VyRXh0ZW5zaW9uIjpmYWxzZX0seyJyZWYiOiJnaXRodWIuY29tL3RpYmNvL2Zsb2dvLWdlbmVyYWwvc3JjL2FwcC9HZW5lcmFsIiwiaWQiOiJHZW5lcmFsIiwidmVyc2lvbiI6IjEuNi4xMSIsInRhZyI6IjEuNi4xMS1iMDIiLCJuYW1lIjoiR2VuZXJhbCIsInMzbG9jYXRpb24iOiJUaWJjby9HZW5lcmFsIiwiaXNVc2VyRXh0ZW5zaW9uIjpmYWxzZX1d",
+  "metadata": {
+    "endpoints": [],
+    "flogoVersion": "2.26.0"
+  }
+}

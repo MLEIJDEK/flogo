@@ -1,0 +1,173 @@
+{
+  "imports": [
+    "github.com/project-flogo/flow",
+    "github.com/project-flogo/contrib/activity/noop",
+    "github.com/tibco/flogo-general/src/app/General/activity/log",
+    "github.com/project-flogo/contrib/activity/actreturn",
+    "github.com/project-flogo/grpc/trigger/grpc"
+  ],
+  "name": "gRPC",
+  "description": "",
+  "version": "1.0.0",
+  "type": "flogo:app",
+  "appModel": "1.1.1",
+  "tags": [],
+  "triggers": [
+    {
+      "ref": "#grpc",
+      "name": "grpc-trigger",
+      "description": "gRPC Trigger",
+      "settings": {
+        "port": 6050,
+        "protoName": "sample.proto",
+        "protoFile": {
+          "filename": "sample.proto",
+          "content": "data:application/octet-stream;base64,c3ludGF4ID0gInByb3RvMyI7DQoNCnBhY2thZ2UgY29tLmJvb2s7DQoNCm1lc3NhZ2UgQm9vayB7DQogICAgaW50NjQgaXNibiA9IDE7DQogICAgc3RyaW5nIHRpdGxlID0gMjsNCiAgICBzdHJpbmcgYXV0aG9yID0gMzsNCn0NCg0KbWVzc2FnZSBHZXRCb29rUmVxdWVzdCB7DQogICAgaW50NjQgaXNibiA9IDE7DQp9DQoNCm1lc3NhZ2UgR2V0Qm9va1ZpYUF1dGhvciB7DQogICAgc3RyaW5nIGF1dGhvciA9IDE7DQp9DQoNCnNlcnZpY2UgQm9va1NlcnZpY2Ugew0KICAgIHJwYyBHZXRCb29rIChHZXRCb29rUmVxdWVzdCkgcmV0dXJucyAoQm9vaykge30NCiAgICBycGMgR2V0Qm9va3NWaWFBdXRob3IgKEdldEJvb2tWaWFBdXRob3IpIHJldHVybnMgKHN0cmVhbSBCb29rKSB7fQ0KICAgIHJwYyBHZXRHcmVhdGVzdEJvb2sgKHN0cmVhbSBHZXRCb29rUmVxdWVzdCkgcmV0dXJucyAoQm9vaykge30NCiAgICBycGMgR2V0Qm9va3MgKHN0cmVhbSBHZXRCb29rUmVxdWVzdCkgcmV0dXJucyAoc3RyZWFtIEJvb2spIHt9DQp9DQoNCm1lc3NhZ2UgQm9va1N0b3JlIHsNCiAgICBzdHJpbmcgbmFtZSA9IDE7DQogICAgbWFwPGludDY0LCBzdHJpbmc+IGJvb2tzID0gMjsNCn0NCg0KZW51bSBFbnVtU2FtcGxlIHsNCiAgICBvcHRpb24gYWxsb3dfYWxpYXMgPSB0cnVlOw0KICAgIFVOS05PV04gPSAwOw0KICAgIFNUQVJURUQgPSAxOw0KICAgIFJVTk5JTkcgPSAxOw0KfQ=="
+        },
+        "enableTLS": false,
+        "enableMTLS": false,
+        "rootCA": "",
+        "serverCert": "",
+        "serverKey": ""
+      },
+      "id": "gRPCTrigger",
+      "handlers": [
+        {
+          "description": "",
+          "settings": {
+            "serviceName": "BookService",
+            "methodName": "GetBook"
+          },
+          "action": {
+            "ref": "github.com/project-flogo/flow",
+            "settings": {
+              "flowURI": "res://flow:New_flow"
+            },
+            "input": {
+              "params": "=$.params"
+            },
+            "output": {
+              "data": "=$.data"
+            }
+          },
+          "reply": {
+            "code": 200
+          },
+          "schemas": {
+            "reply": {
+              "data": {
+                "type": "json",
+                "value": "{\"type\":\"object\",\"properties\":{\"isbn\":{\"type\":\"number\"},\"title\":{\"type\":\"string\"},\"author\":{\"type\":\"string\"}},\"required\":[]}",
+                "fe_metadata": "{\"type\":\"object\",\"properties\":{\"isbn\":{\"type\":\"number\"},\"title\":{\"type\":\"string\"},\"author\":{\"type\":\"string\"}},\"required\":[]}"
+              }
+            },
+            "output": {
+              "params": {
+                "type": "json",
+                "value": "{\"type\":\"object\",\"properties\":{\"isbn\":{\"type\":\"number\"}},\"required\":[]}",
+                "fe_metadata": "{\"type\":\"object\",\"properties\":{\"isbn\":{\"type\":\"number\"}},\"required\":[]}"
+              }
+            }
+          },
+          "name": "New_flow"
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "id": "flow:New_flow",
+      "data": {
+        "name": "New_flow",
+        "description": "",
+        "links": [
+          {
+            "id": 1,
+            "from": "StartActivity",
+            "to": "LogMessage",
+            "type": "label",
+            "label": "StartActivity to LogMessage"
+          },
+          {
+            "id": 2,
+            "from": "LogMessage",
+            "to": "Return",
+            "type": "label",
+            "label": "LogMessage to Return"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "StartActivity",
+            "name": "StartActivity",
+            "description": "NoOp Activity",
+            "activity": {
+              "ref": "#noop"
+            }
+          },
+          {
+            "id": "LogMessage",
+            "name": "LogMessage",
+            "description": "Simple Log Message Activity",
+            "activity": {
+              "ref": "#log",
+              "input": {
+                "Log Level": "INFO",
+                "flowInfo": false
+              }
+            }
+          },
+          {
+            "id": "Return",
+            "name": "Return",
+            "description": "Simple Return Activity",
+            "activity": {
+              "ref": "#actreturn"
+            }
+          }
+        ],
+        "fe_metadata": "eyJTdGFydEFjdGl2aXR5Ijp7IngiOjEwMCwieSI6MTAwfSwiTG9nTWVzc2FnZSI6eyJ4IjoyMjgsInkiOjg4fSwiUmV0dXJuIjp7IngiOjQzOCwieSI6ODh9fQ==",
+        "metadata": {
+          "input": [
+            {
+              "name": "params",
+              "type": "object",
+              "schema": {
+                "type": "json",
+                "value": "{\"isbn\":{\"type\":\"number\"}}"
+              }
+            }
+          ],
+          "output": [
+            {
+              "name": "data",
+              "type": "object",
+              "schema": {
+                "type": "json",
+                "value": "{\"isbn\":{\"type\":\"number\"},\"title\":{\"type\":\"string\"},\"author\":{\"type\":\"string\"}}"
+              }
+            }
+          ],
+          "fe_metadata": {
+            "input": "{\"type\":\"object\",\"title\":\"gRPCTrigger\",\"properties\":{\"params\":{\"type\":\"object\",\"properties\":{\"isbn\":{\"type\":\"number\"}},\"required\":[]}}}",
+            "output": "{\"type\":\"object\",\"title\":\"Inputs\",\"properties\":{\"data\":{\"type\":\"object\",\"properties\":{\"isbn\":{\"type\":\"number\"},\"title\":{\"type\":\"string\"},\"author\":{\"type\":\"string\"}},\"required\":[]}},\"required\":[]}"
+          }
+        }
+      }
+    }
+  ],
+  "properties": [],
+  "connections": {},
+  "contrib": "W3sicmVmIjoiZ2l0aHViLmNvbS90aWJjby9mbG9nby1nZW5lcmFsL3NyYy9hcHAvR2VuZXJhbCIsImlkIjoiR2VuZXJhbCIsInZlcnNpb24iOiIxLjYuMTEiLCJ0YWciOiIxLjYuMTEtYjAyIiwibmFtZSI6IkdlbmVyYWwiLCJzM2xvY2F0aW9uIjoiVGliY28vR2VuZXJhbCIsImlzVXNlckV4dGVuc2lvbiI6ZmFsc2V9XQ==",
+  "metadata": {
+    "endpoints": [
+      {
+        "protocol": "grpc",
+        "port": "6050",
+        "title": "gRPCTrigger",
+        "type": "public"
+      }
+    ],
+    "flogoVersion": "2.25.11"
+  }
+}

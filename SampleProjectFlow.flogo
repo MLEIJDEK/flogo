@@ -1,0 +1,253 @@
+{
+  "imports": [
+    "github.com/project-flogo/flow",
+    "github.com/project-flogo/contrib/activity/noop",
+    "github.com/tibco/flogo-general/src/app/General/activity/log",
+    "github.com/tibco/flogo-files/src/app/File/activity/read",
+    "github.com/tibco/flogo-general/src/app/General/activity/mapper",
+    "github.com/tibco/flogo-files/src/app/File/activity/rename",
+    "github.com/tibco/flogo-general/src/app/General/trigger/timer"
+  ],
+  "name": "SampleProjectFlow",
+  "description": "Migrated from MuleSoft testprojectFlow - File processing with scheduler, retry logic, and logging",
+  "version": "1.0.0",
+  "type": "flogo:app",
+  "appModel": "1.1.1",
+  "tags": [],
+  "triggers": [
+    {
+      "ref": "#timer",
+      "name": "tibco-wi-timer",
+      "description": "Timer trigger - runs every 60 seconds like MuleSoft scheduler",
+      "settings": {},
+      "id": "timer_trigger",
+      "handlers": [
+        {
+          "description": "Main flow for file processing - reads file, moves it with retry logic, and logs progress",
+          "settings": {
+            "Scheduler Options": "Timer",
+            "Start Time": "",
+            "Repeating": true,
+            "Delayed Start": false,
+            "Time Interval": 60,
+            "Interval Unit": "Second",
+            "Cron Expression": "CRON_TZ=Europe/Amsterdam * * * * *"
+          },
+          "action": {
+            "ref": "github.com/project-flogo/flow",
+            "settings": {
+              "flowURI": "res://flow:FileProcessingFlow"
+            }
+          },
+          "name": "FileProcessingFlow"
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "id": "flow:FileProcessingFlow",
+      "data": {
+        "name": "FileProcessingFlow",
+        "description": "Main flow for file processing - reads file, moves it with retry logic, and logs progress",
+        "links": [
+          {
+            "id": 1,
+            "from": "StartActivity",
+            "to": "LogStartProcess",
+            "type": "label",
+            "label": "StartActivity to LogStartProcess"
+          },
+          {
+            "id": 2,
+            "from": "LogStartProcess",
+            "to": "ReadInputFile",
+            "type": "label",
+            "label": "LogStartProcess to ReadInputFile"
+          },
+          {
+            "id": 3,
+            "from": "ReadInputFile",
+            "to": "LogAfterFileRead",
+            "type": "label",
+            "label": "ReadInputFile to LogAfterFileRead"
+          },
+          {
+            "id": 4,
+            "from": "LogAfterFileRead",
+            "to": "SetTestVariable",
+            "type": "label",
+            "label": "LogAfterFileRead to SetTestVariable"
+          },
+          {
+            "id": 5,
+            "from": "SetTestVariable",
+            "to": "MoveFileWithRetry",
+            "type": "label",
+            "label": "SetTestVariable to MoveFileWithRetry"
+          },
+          {
+            "id": 6,
+            "from": "MoveFileWithRetry",
+            "to": "TransformMessage",
+            "type": "label",
+            "label": "MoveFileWithRetry to TransformMessage"
+          },
+          {
+            "id": 7,
+            "from": "TransformMessage",
+            "to": "LogProcessingComplete",
+            "type": "label",
+            "label": "TransformMessage to LogProcessingComplete"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "StartActivity",
+            "name": "StartActivity",
+            "description": "NoOp Activity",
+            "activity": {
+              "ref": "#noop"
+            }
+          },
+          {
+            "id": "LogStartProcess",
+            "name": "LogStartProcess",
+            "description": "Log Start of Process message",
+            "activity": {
+              "ref": "#log",
+              "input": {
+                "Log Level": "INFO",
+                "flowInfo": false,
+                "message": "Start of Process",
+                "logLevel": ""
+              }
+            }
+          },
+          {
+            "id": "ReadInputFile",
+            "name": "ReadInputFile",
+            "description": "Read Input.txt file from input directory",
+            "activity": {
+              "ref": "#read",
+              "input": {
+                "readAs": "Text",
+                "compress": "None",
+                "input": "{\"filename\": \"C:\\\\Users\\\\miche\\\\Documents\\\\Demo\\\\Files\\\\In\\\\Input.txt\"}"
+              },
+              "schemas": {
+                "input": {
+                  "input": {
+                    "type": "json",
+                    "value": "{\"properties\":{\"fileName\":{\"type\":\"string\"}},\"required\":[\"fileName\"],\"type\":\"object\"}",
+                    "fe_metadata": "{\"properties\":{\"fileName\":{\"type\":\"string\"}},\"required\":[\"fileName\"],\"type\":\"object\"}"
+                  }
+                },
+                "output": {
+                  "output": {
+                    "type": "json",
+                    "value": "{\"properties\":{\"fileMetadata\":{\"properties\":{\"fullPath\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"size\":{\"type\":\"number\"},\"mode\":{\"type\":\"string\"},\"modTime\":{\"type\":\"string\",\"format\":\"date-time\"},\"isDir\":{\"type\":\"boolean\"}},\"type\":\"object\"},\"fileContent\":{\"properties\":{\"textContent\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}",
+                    "fe_metadata": "{\"properties\":{\"fileMetadata\":{\"properties\":{\"fullPath\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"size\":{\"type\":\"number\"},\"mode\":{\"type\":\"string\"},\"modTime\":{\"type\":\"string\",\"format\":\"date-time\"},\"isDir\":{\"type\":\"boolean\"}},\"type\":\"object\"},\"fileContent\":{\"properties\":{\"textContent\":{\"type\":\"string\"}},\"type\":\"object\"}},\"type\":\"object\"}"
+                  }
+                }
+              },
+              "feSchemaMap": {}
+            }
+          },
+          {
+            "id": "LogAfterFileRead",
+            "name": "LogAfterFileRead",
+            "description": "Log After File Read message",
+            "activity": {
+              "ref": "#log",
+              "input": {
+                "Log Level": "INFO",
+                "flowInfo": false,
+                "message": "After File Read",
+                "logLevel": ""
+              }
+            }
+          },
+          {
+            "id": "SetTestVariable",
+            "name": "SetTestVariable",
+            "description": "Set TestVariable to true using mapper",
+            "activity": {
+              "ref": "#mapper",
+              "input": {
+                "input": "{\"TestVariable\": true}"
+              }
+            }
+          },
+          {
+            "id": "MoveFileWithRetry",
+            "name": "MoveFileWithRetry",
+            "description": "Move file from In to Out directory with retry logic - max 3 retries, 5000ms between retries",
+            "activity": {
+              "ref": "#rename",
+              "input": {
+                "createNonExistingDir": false,
+                "input": "{\"oldFileName\": \"C:\\\\\\\\Users\\\\\\\\miche\\\\\\\\Documents\\\\\\\\Demo\\\\\\\\Files\\\\\\\\In\\\\\\\\Input.txt\", \"newFileName\": \"C:\\\\\\\\Users\\\\\\\\miche\\\\\\\\Documents\\\\\\\\Demo\\\\\\\\Files\\\\\\\\Out\\\\\\\\Input.txt\"}"
+              },
+              "schemas": {
+                "input": {
+                  "input": {
+                    "type": "json",
+                    "value": "{\"properties\":{\"fromFileName\":{\"type\":\"string\"},\"toFileName\":{\"type\":\"string\"},\"overwrite\":{\"type\":\"boolean\"}},\"required\":[\"fromFileName\",\"toFileName\",\"overwrite\"],\"type\":\"object\"}",
+                    "fe_metadata": "{\"properties\":{\"fromFileName\":{\"type\":\"string\"},\"toFileName\":{\"type\":\"string\"},\"overwrite\":{\"type\":\"boolean\"}},\"required\":[\"fromFileName\",\"toFileName\",\"overwrite\"],\"type\":\"object\"}"
+                  }
+                },
+                "output": {
+                  "output": {
+                    "type": "json",
+                    "value": "{\"properties\":{\"fileMetadata\":{\"properties\":{\"fullPath\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"size\":{\"type\":\"number\"},\"mode\":{\"type\":\"string\"},\"modTime\":{\"type\":\"string\",\"format\":\"date-time\"},\"isDir\":{\"type\":\"boolean\"}},\"type\":\"object\"}},\"type\":\"object\"}",
+                    "fe_metadata": "{\"properties\":{\"fileMetadata\":{\"properties\":{\"fullPath\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"size\":{\"type\":\"number\"},\"mode\":{\"type\":\"string\"},\"modTime\":{\"type\":\"string\",\"format\":\"date-time\"},\"isDir\":{\"type\":\"boolean\"}},\"type\":\"object\"}},\"type\":\"object\"}"
+                  }
+                }
+              },
+              "feSchemaMap": {}
+            }
+          },
+          {
+            "id": "TransformMessage",
+            "name": "TransformMessage",
+            "description": "Transform Message - Maps TestVariable to payload (equivalent to DataWeave transformation)",
+            "activity": {
+              "ref": "#mapper",
+              "input": {
+                "input": "{\"payload\": \"=$.activity[SetTestVariable].output.output.TestVariable\"}"
+              }
+            }
+          },
+          {
+            "id": "LogProcessingComplete",
+            "name": "LogProcessingComplete",
+            "description": "Log File Processing Complete message - final log statement",
+            "activity": {
+              "ref": "#log",
+              "input": {
+                "Log Level": "INFO",
+                "flowInfo": false,
+                "message": "File Processing Complete",
+                "logLevel": ""
+              }
+            }
+          }
+        ],
+        "fe_metadata": "eyJTdGFydEFjdGl2aXR5Ijp7IngiOjUwLCJ5Ijo0NX0sIkxvZ1N0YXJ0UHJvY2VzcyI6eyJ4IjoyNTAsInkiOjQ1fSwiUmVhZElucHV0RmlsZSI6eyJ4Ijo0NTAsInkiOjQ1fSwiTG9nQWZ0ZXJGaWxlUmVhZCI6eyJ4Ijo2NTAsInkiOjQ1fSwiU2V0VGVzdFZhcmlhYmxlIjp7IngiOjI1MCwieSI6MTk1fSwiTW92ZUZpbGVXaXRoUmV0cnkiOnsieCI6NDUwLCJ5IjoxOTV9LCJUcmFuc2Zvcm1NZXNzYWdlIjp7IngiOjY1MCwieSI6MTk1fSwiTG9nUHJvY2Vzc2luZ0NvbXBsZXRlIjp7IngiOjI1MCwieSI6MzQ1fX0=",
+        "metadata": {
+          "input": [],
+          "output": [],
+          "fe_metadata": {}
+        }
+      }
+    }
+  ],
+  "properties": [],
+  "connections": {},
+  "contrib": "W3sicmVmIjoiZ2l0aHViLmNvbS90aWJjby9mbG9nby1nZW5lcmFsL3NyYy9hcHAvR2VuZXJhbCIsImlkIjoiR2VuZXJhbCIsInZlcnNpb24iOiIxLjYuMTEiLCJ0YWciOiIxLjYuMTEtYjAyIiwibmFtZSI6IkdlbmVyYWwiLCJzM2xvY2F0aW9uIjoiVGliY28vR2VuZXJhbCIsImlzVXNlckV4dGVuc2lvbiI6ZmFsc2V9LHsicmVmIjoiZ2l0aHViLmNvbS90aWJjby9mbG9nby1maWxlcy9zcmMvYXBwL0ZpbGUiLCJpZCI6IkZpbGUiLCJ2ZXJzaW9uIjoiMS4wLjAiLCJ0YWciOiIxLjAuMC1iMTQiLCJuYW1lIjoiRmlsZSIsInMzbG9jYXRpb24iOiJUaWJjby9GaWxlIiwiaXNVc2VyRXh0ZW5zaW9uIjpmYWxzZX1d",
+  "metadata": {
+    "endpoints": [],
+    "flogoVersion": "2.26.0"
+  }
+}

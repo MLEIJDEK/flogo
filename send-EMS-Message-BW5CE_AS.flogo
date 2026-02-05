@@ -1,0 +1,491 @@
+{
+  "imports": [
+    "github.com/project-flogo/flow",
+    "github.com/project-flogo/contrib/activity/noop",
+    "github.com/tibco/flogo-ems/src/app/EMS/activity/sendmessage",
+    "github.com/tibco/flogo-general/src/app/General/activity/httpresponse",
+    "github.com/tibco/flogo-general/src/app/General/activity/actreply",
+    "git.tibco.com/git/product/ipaas/wi-tcta.git/src/app/AuditSafe/activity/txcreate",
+    "github.com/tibco/flogo-general/src/app/General/trigger/rest",
+    "github.com/project-flogo/contrib/function/datetime",
+    "github.com/project-flogo/contrib/function/utils",
+    "github.com/tibco/flogo-ems/src/app/EMS/connector/ems"
+  ],
+  "name": "MLE_Send-EMS-Msg-BW5_AS",
+  "description": "",
+  "version": "1.0.0",
+  "type": "flogo:app",
+  "appModel": "1.1.1",
+  "tags": [],
+  "triggers": [
+    {
+      "ref": "#rest",
+      "name": "tibco-wi-rest",
+      "description": "Simple REST Trigger",
+      "settings": {
+        "port": 9999,
+        "APISpecUpdate": true,
+        "swagger": {
+          "filename": "SendDataAPI.json",
+          "content": "data:application/json;base64,ew0KCSJvcGVuYXBpIjogIjMuMC4zIiwNCgkiaW5mbyI6IHsNCgkJInRpdGxlIjogIlBvc3REYXRhIiwNCgkJImRlc2NyaXB0aW9uIjogIiIsDQoJCSJ2ZXJzaW9uIjogIjEuMCINCgl9LA0KCSJ0YWdzIjogW10sDQoJInBhdGhzIjogew0KCQkiL3Bvc3REYXRhIjogew0KCQkJInBvc3QiOiB7DQoJCQkJInN1bW1hcnkiOiAiIiwNCgkJCQkiZGVzY3JpcHRpb24iOiAiQVBJIFNwZWNpZmljYXRpb24gdG8gcG9zdCBkYXRhIiwNCgkJCQkicGFyYW1ldGVycyI6IFtdLA0KCQkJCSJyZXF1ZXN0Qm9keSI6IHsNCgkJCQkJImNvbnRlbnQiOiB7DQoJCQkJCQkiYXBwbGljYXRpb24vanNvbiI6IHsNCgkJCQkJCQkic2NoZW1hIjogew0KCQkJCQkJCQkiSW5wdXRNZXNzYWdlIjogInN0cmluZyINCgkJCQkJCQl9DQoJCQkJCQl9DQoJCQkJCX0NCgkJCQl9LA0KCQkJCSJyZXNwb25zZXMiOiB7DQoJCQkJCQkiMjAwIjogew0KCQkJCQkJCSJkZXNjcmlwdGlvbiI6ICJzdWNjZXNzIHJlc3BvbnNlIiwNCgkJCQkJCQkiY29udGVudCI6IHsNCgkJCQkJCQkJImFwcGxpY2F0aW9uL2pzb24iOiB7DQoJCQkJCQkJCQkic2NoZW1hIjogew0KCQkJCQkJCQkJCSJyZXNwb25zZSI6ICJzdHJpbmciDQoJCQkJCQkJCQl9DQoJCQkJCQkJCX0NCgkJCQkJCQl9DQoJCQkJCQkNCgkJCQkJfSwNCgkJCQkJImhlYWRlcnMiOiB7fQ0KCQkJCX0NCgkJCX0NCgkJfQ0KCX0sDQoJImNvbXBvbmVudHMiOiB7DQoJCSJzY2hlbWFzIjoge30NCgl9DQp9"
+        },
+        "swaggerVersion": "v3",
+        "apiVersion": "1.0",
+        "secureConnection": false,
+        "serverKey": "",
+        "caCertificate": ""
+      },
+      "id": "ReceiveHTTPMessage",
+      "handlers": [
+        {
+          "description": "Send a message to EMS",
+          "settings": {
+            "APISpecPath": "/postData",
+            "Method": "POST",
+            "reqType": "application/json",
+            "Path": "/postData",
+            "OutputValidation": false
+          },
+          "action": {
+            "ref": "github.com/project-flogo/flow",
+            "settings": {
+              "flowURI": "res://flow:Send_EMS"
+            },
+            "input": {
+              "body": {
+                "mapping": {
+                  "inputMessage": "=$.body.InputMessage"
+                }
+              }
+            },
+            "output": {
+              "code": "=$.code",
+              "responseBody": "=$.responseBody"
+            }
+          },
+          "reply": {
+            "code": 200,
+            "configureResponseCodes": true,
+            "message": ""
+          },
+          "schemas": {
+            "reply": {
+              "responseBody": {
+                "type": "json",
+                "value": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}",
+                "fe_metadata": "{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}"
+              },
+              "responseCodesSchema": {
+                "type": "json",
+                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"code\":{\"type\":\"number\"},\"responseType\":{\"type\":\"string\"},\"responseSchema\":{\"type\":\"string\"}}}}",
+                "fe_metadata": "[{\"code\":200,\"responseType\":\"object\",\"responseSchema\":\"{\\\"response\\\":\\\"string\\\"}\"}]"
+              }
+            },
+            "output": {
+              "headers": {
+                "type": "json",
+                "value": "{\"type\":\"object\",\"properties\":{\"Accept\":{\"type\":\"string\",\"visible\":false},\"Accept-Charset\":{\"type\":\"string\",\"visible\":false},\"Accept-Encoding\":{\"type\":\"string\",\"visible\":false},\"Authorization\":{\"type\":\"string\",\"visible\":false},\"Connection\":{\"type\":\"string\",\"visible\":false},\"Content-Length\":{\"type\":\"string\",\"visible\":false},\"Content-Type\":{\"type\":\"string\",\"visible\":false},\"Cookie\":{\"type\":\"string\",\"visible\":false},\"Pragma\":{\"type\":\"string\",\"visible\":false}},\"required\":[]}",
+                "fe_metadata": "[{\"parameterName\":\"Accept\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Charset\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Encoding\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Authorization\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Connection\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Length\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Type\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Cookie\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Pragma\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false}]"
+              },
+              "body": {
+                "type": "json",
+                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"InputMessage\":{\"type\":\"string\"}}}",
+                "fe_metadata": "{\"InputMessage\":\"string\"}"
+              },
+              "multipartFormData": {
+                "type": "json",
+                "value": "{\"type\":\"object\",\"properties\":{}}",
+                "fe_metadata": "{\"type\":\"object\",\"properties\":{}}"
+              },
+              "multipartForm": {
+                "type": "json",
+                "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"array\",\"items\":{}}",
+                "fe_metadata": "[]"
+              }
+            }
+          },
+          "name": "Send_EMS"
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "id": "flow:Send_EMS",
+      "data": {
+        "name": "Send_EMS",
+        "description": "Send a message to EMS",
+        "links": [
+          {
+            "id": 1,
+            "from": "StartActivity",
+            "to": "EMSSendMessage",
+            "type": "label",
+            "label": "StartActivity to EMSSendMessage"
+          },
+          {
+            "id": 2,
+            "from": "EMSSendMessage",
+            "to": "ConfigureHTTPResponse",
+            "type": "label",
+            "label": "EMSSendMessage to ConfigureHTTPResponse"
+          },
+          {
+            "id": 3,
+            "from": "ConfigureHTTPResponse",
+            "to": "ReplyToTrigger",
+            "type": "label",
+            "label": "ConfigureHTTPResponse to ReplyToTrigger"
+          },
+          {
+            "id": 4,
+            "from": "StartActivity",
+            "to": "PostAuditEvent",
+            "type": "label",
+            "label": "StartActivity to PostAuditEvent"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "StartActivity",
+            "name": "StartActivity",
+            "description": "NoOp Activity",
+            "activity": {
+              "ref": "#noop"
+            }
+          },
+          {
+            "id": "EMSSendMessage",
+            "name": "EMSSendMessage",
+            "description": "This activity sends message to the specified EMS destination",
+            "activity": {
+              "ref": "#sendmessage",
+              "settings": {
+                "connection": "conn://43a40201-5d92-40a1-a884-157031567b36",
+                "destinationType": "Queue",
+                "settingDestination": "bw5.test",
+                "deliveryDelay": 0
+              },
+              "input": {
+                "message": "=$flow.body.inputMessage",
+                "destination": ""
+              },
+              "schemas": {
+                "input": {
+                  "headers": {
+                    "type": "json",
+                    "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"correlationID\":{\"type\":\"string\"},\"replyTo\":{\"type\":\"string\"},\"deliveryMode\":{\"type\":\"string\"},\"expiration\":{\"type\":\"integer\"},\"priority\":{\"type\":\"integer\"}}}",
+                    "fe_metadata": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"correlationID\":{\"type\":\"string\"},\"replyTo\":{\"type\":\"string\"},\"deliveryMode\":{\"type\":\"string\"},\"expiration\":{\"type\":\"integer\"},\"priority\":{\"type\":\"integer\"}}}"
+                  },
+                  "messageProperties": {
+                    "type": "json",
+                    "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"property\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"value\":{\"type\":\"string\"},\"type\":{\"type\":\"string\"}},\"required\":[\"name\",\"value\"]}}}}",
+                    "fe_metadata": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"property\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"value\":{\"type\":\"string\"},\"type\":{\"type\":\"string\"}},\"required\":[\"name\",\"value\"]}}}}"
+                  }
+                }
+              },
+              "feSchemaMap": {}
+            }
+          },
+          {
+            "id": "ConfigureHTTPResponse",
+            "name": "ConfigureHTTPResponse",
+            "description": "Configure HTTP Response Activity",
+            "activity": {
+              "ref": "#httpresponse",
+              "input": {
+                "trigger": "ReceiveHTTPMessage",
+                "responsecode": "200",
+                "input": {
+                  "mapping": {
+                    "body": {
+                      "response": "=$activity[EMSSendMessage].messageId"
+                    }
+                  }
+                }
+              },
+              "schemas": {
+                "input": {
+                  "input": {
+                    "type": "json",
+                    "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"object\",\"properties\":{\"response\":{\"type\":\"string\"}}}}}",
+                    "fe_metadata": "{\"body\":{\"response\":\"string\"}}"
+                  }
+                },
+                "output": {
+                  "response": {
+                    "type": "json",
+                    "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"object\",\"properties\":{\"response\":{\"type\":\"string\"}}}}}",
+                    "fe_metadata": "{\"body\":{\"response\":\"string\"}}"
+                  }
+                }
+              },
+              "feSchemaMap": {}
+            }
+          },
+          {
+            "id": "ReplyToTrigger",
+            "name": "ReplyToTrigger",
+            "description": "Reply back to the trigger and continue flow execution, it must be used only in the flow with the trigger configured.",
+            "activity": {
+              "ref": "#actreply",
+              "input": {
+                "reply": {
+                  "mapping": {
+                    "code": "=$activity[ConfigureHTTPResponse].code",
+                    "responseBody": "=$activity[ConfigureHTTPResponse].response"
+                  }
+                }
+              },
+              "schemas": {
+                "input": {
+                  "reply": {
+                    "type": "json",
+                    "value": "{\"type\":\"object\",\"title\":\"Inputs\",\"properties\":{\"code\":{\"type\":\"integer\",\"required\":false},\"responseBody\":{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}},\"required\":[]}",
+                    "fe_metadata": "{\"type\":\"object\",\"title\":\"Inputs\",\"properties\":{\"code\":{\"type\":\"integer\",\"required\":false},\"responseBody\":{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}},\"required\":[]}"
+                  }
+                }
+              },
+              "feSchemaMap": {}
+            }
+          },
+          {
+            "id": "PostAuditEvent",
+            "name": "PostAuditEvent",
+            "description": "Use this activity to post an audit event to TIBCO AuditSafe",
+            "activity": {
+              "ref": "#txcreate",
+              "input": {
+                "input": {
+                  "mapping": {
+                    "payload": "=$flow.body.inputMessage",
+                    "event_timestamp": "=datetime.currentDatetime()",
+                    "event_status": "test",
+                    "audit_event": "=utils.uuid()",
+                    "transaction_id": "=utils.uuid()",
+                    "event_desc": "Test description",
+                    "biz_proc": "Test Process"
+                  }
+                }
+              },
+              "schemas": {
+                "input": {
+                  "input": {
+                    "type": "json",
+                    "value": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"type\":\"object\",\"properties\":{\"transaction_id\":{\"type\":\"string\"},\"biz_proc\":{\"type\":\"string\"},\"audit_event\":{\"type\":\"string\"},\"event_desc\":{\"type\":\"string\"},\"event_id\":{\"type\":\"string\"},\"event_timestamp\":{\"type\":\"string\"},\"event_status\":{\"type\":\"string\"},\"event_source\":{\"type\":\"string\"},\"event_destination\":{\"type\":\"string\"},\"extra_props\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"prop_name\":{\"type\":\"string\"},\"prop_value\":{\"type\":\"string\"}}}},\"parent_event_id\":{\"type\":\"string\"},\"payload\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"index\":{\"type\":\"string\"}},\"required\":[\"transaction_id\",\"biz_proc\",\"audit_event\",\"event_desc\",\"event_timestamp\",\"event_status\"]}",
+                    "fe_metadata": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"type\":\"object\",\"properties\":{\"transaction_id\":{\"type\":\"string\"},\"biz_proc\":{\"type\":\"string\"},\"audit_event\":{\"type\":\"string\"},\"event_desc\":{\"type\":\"string\"},\"event_id\":{\"type\":\"string\"},\"event_timestamp\":{\"type\":\"string\"},\"event_status\":{\"type\":\"string\"},\"event_source\":{\"type\":\"string\"},\"event_destination\":{\"type\":\"string\"},\"extra_props\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"prop_name\":{\"type\":\"string\"},\"prop_value\":{\"type\":\"string\"}}}},\"parent_event_id\":{\"type\":\"string\"},\"payload\":{\"type\":\"string\"},\"id\":{\"type\":\"string\"},\"index\":{\"type\":\"string\"}},\"required\":[\"transaction_id\",\"biz_proc\",\"audit_event\",\"event_desc\",\"event_timestamp\",\"event_status\"]}"
+                  }
+                },
+                "output": {
+                  "output": {
+                    "type": "json",
+                    "value": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"type\":\"object\",\"properties\":{\"tas_event_id\":{\"type\":\"string\"},\"transaction_id\":{\"type\":\"string\"},\"event_id\":{\"type\":\"string\"}}}",
+                    "fe_metadata": "{\"$schema\":\"http://json-schema.org/draft-06/schema#\",\"type\":\"object\",\"properties\":{\"tas_event_id\":{\"type\":\"string\"},\"transaction_id\":{\"type\":\"string\"},\"event_id\":{\"type\":\"string\"}}}"
+                  }
+                }
+              },
+              "feSchemaMap": {}
+            }
+          }
+        ],
+        "fe_metadata": "eyJTdGFydEFjdGl2aXR5Ijp7IngiOjEwMCwieSI6OTl9LCJFTVNTZW5kTWVzc2FnZSI6eyJ4IjoyNzUsInkiOjkxfSwiQ29uZmlndXJlSFRUUFJlc3BvbnNlIjp7IngiOjQ4OCwieSI6OTN9LCJSZXBseVRvVHJpZ2dlciI6eyJ4Ijo3MTAsInkiOjkzfSwiUG9zdEF1ZGl0RXZlbnQiOnsieCI6Mjc3LCJ5IjoxOTN9fQ==",
+        "metadata": {
+          "input": [
+            {
+              "name": "headers",
+              "type": "object",
+              "schema": {
+                "type": "json",
+                "value": "{\"Accept\":{\"type\":\"string\",\"visible\":false},\"Accept-Charset\":{\"type\":\"string\",\"visible\":false},\"Accept-Encoding\":{\"type\":\"string\",\"visible\":false},\"Content-Type\":{\"type\":\"string\",\"visible\":false},\"Content-Length\":{\"type\":\"string\",\"visible\":false},\"Connection\":{\"type\":\"string\",\"visible\":false},\"Cookie\":{\"type\":\"string\",\"visible\":false},\"Pragma\":{\"type\":\"string\",\"visible\":false}}"
+              }
+            },
+            {
+              "name": "body",
+              "type": "object",
+              "schema": {
+                "type": "json",
+                "value": "{\"inputMessage\":{\"type\":\"string\"}}"
+              }
+            },
+            {
+              "name": "requestURI",
+              "type": "string"
+            },
+            {
+              "name": "method",
+              "type": "string"
+            }
+          ],
+          "output": [
+            {
+              "name": "code",
+              "type": "integer"
+            },
+            {
+              "name": "responseBody",
+              "type": "object",
+              "schema": {
+                "type": "json",
+                "value": "{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}"
+              }
+            }
+          ],
+          "fe_metadata": {
+            "input": "{\"type\":\"object\",\"title\":\"ReceiveHTTPMessage\",\"properties\":{\"headers\":{\"type\":\"object\",\"properties\":{\"Accept\":{\"type\":\"string\",\"visible\":false},\"Accept-Charset\":{\"type\":\"string\",\"visible\":false},\"Accept-Encoding\":{\"type\":\"string\",\"visible\":false},\"Content-Type\":{\"type\":\"string\",\"visible\":false},\"Content-Length\":{\"type\":\"string\",\"visible\":false},\"Connection\":{\"type\":\"string\",\"visible\":false},\"Cookie\":{\"type\":\"string\",\"visible\":false},\"Pragma\":{\"type\":\"string\",\"visible\":false}},\"required\":[]},\"body\":{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"inputMessage\":{\"type\":\"string\"}}},\"requestURI\":{\"type\":\"string\",\"required\":false},\"method\":{\"type\":\"string\",\"required\":false}}}",
+            "output": "{\"type\":\"object\",\"title\":\"Inputs\",\"properties\":{\"code\":{\"type\":\"integer\",\"required\":false},\"responseBody\":{\"type\":\"object\",\"properties\":{\"body\":{\"type\":\"any\"},\"headers\":{\"type\":\"object\"}}}},\"required\":[]}"
+          }
+        },
+        "explicitReply": true
+      }
+    }
+  ],
+  "properties": [
+    {
+      "name": "EMS.DP4_EMS.ServerUrl",
+      "type": "string",
+      "value": "tcp://emsserver15-emsactive.nlpresales-ns.svc:9011,tcp://emsserver15-ems.nlpresales-ns.svc:9011"
+    },
+    {
+      "name": "EMS.DP4_EMS.User_Name",
+      "type": "string",
+      "value": "admin"
+    },
+    {
+      "name": "EMS.DP4_EMS.Password",
+      "type": "string",
+      "value": ""
+    },
+    {
+      "name": "EMS.DP4_EMS.Client_ID",
+      "type": "string",
+      "value": ""
+    },
+    {
+      "name": "EMS.DP4_EMS.Reconnect_Count",
+      "type": "float64",
+      "value": 4
+    },
+    {
+      "name": "EMS.DP4_EMS.Reconnect_Delay",
+      "type": "float64",
+      "value": 500
+    },
+    {
+      "name": "EMS.DP4_EMS.Retry_Timeout",
+      "type": "float64",
+      "value": 0
+    }
+  ],
+  "connections": {
+    "43a40201-5d92-40a1-a884-157031567b36": {
+      "id": "43a40201-5d92-40a1-a884-157031567b36",
+      "name": "DP4_EMS",
+      "ref": "#ems",
+      "isGlobal": false,
+      "settings": {
+        "name": "DP4_EMS",
+        "description": "Ems client configuration",
+        "serverUrl": "=$property[\"EMS.DP4_EMS.ServerUrl\"]",
+        "authenticationMode": "None",
+        "userName": "=$property[\"EMS.DP4_EMS.User_Name\"]",
+        "password": "=$property[\"EMS.DP4_EMS.Password\"]",
+        "clientID": "=$property[\"EMS.DP4_EMS.Client_ID\"]",
+        "enablemTLS": true,
+        "clientCert": "",
+        "clientKey": "",
+        "caCert": "",
+        "privateKeyPassword": "",
+        "noVerifyHostname": true,
+        "reconnectCount": "=$property[\"EMS.DP4_EMS.Reconnect_Count\"]",
+        "reconnectDelay": "=$property[\"EMS.DP4_EMS.Reconnect_Delay\"]",
+        "reconnectTimeout": "=$property[\"EMS.DP4_EMS.Retry_Timeout\"]"
+      }
+    }
+  },
+  "contrib": "W3sicmVmIjoiZ2l0aHViLmNvbS90aWJjby9mbG9nby1nZW5lcmFsL3NyYy9hcHAvR2VuZXJhbCIsImlkIjoiR2VuZXJhbCIsInZlcnNpb24iOiIxLjYuMTEiLCJ0YWciOiIxLjYuMTEtYjAyIiwibmFtZSI6IkdlbmVyYWwiLCJzM2xvY2F0aW9uIjoiVGliY28vR2VuZXJhbCIsImlzVXNlckV4dGVuc2lvbiI6ZmFsc2V9LHsicmVmIjoiZ2l0aHViLmNvbS90aWJjby9mbG9nby1lbXMvc3JjL2FwcC9FTVMiLCJpZCI6IkVNUyIsInZlcnNpb24iOiIxLjAuMyIsInRhZyI6IjEuMC4zLWIwMyIsIm5hbWUiOiJUSUJDTyBFbnRlcnByaXNlIE1lc3NhZ2UgU2VydmljZSIsInMzbG9jYXRpb24iOiJUaWJjby9FTVMiLCJpc1VzZXJFeHRlbnNpb24iOmZhbHNlfSx7InJlZiI6ImdpdC50aWJjby5jb20vZ2l0L3Byb2R1Y3QvaXBhYXMvd2ktdGN0YS5naXQvc3JjL2FwcC9BdWRpdFNhZmUiLCJpZCI6IkF1ZGl0U2FmZSIsInZlcnNpb24iOiIxLjAuMSIsInRhZyI6IjEuMC4xLWIwMiIsIm5hbWUiOiJUSUJDTyhSKSBBdWRpdFNhZmUiLCJzM2xvY2F0aW9uIjoiVGliY28vQXVkaXRTYWZlIiwiaXNVc2VyRXh0ZW5zaW9uIjpmYWxzZX1d",
+  "metadata": {
+    "endpoints": [
+      {
+        "protocol": "http",
+        "port": "9999",
+        "spec": {
+          "name": "MLE_Send-EMS-Msg-BW5_AS",
+          "version": "1.0.0"
+        },
+        "title": "ReceiveHTTPMessage",
+        "swagger": {
+          "openapi": "3.0.0",
+          "info": {
+            "title": "MLE_Send-EMS-Msg-BW5_AS",
+            "version": "1.0.0",
+            "description": "Simple REST Trigger"
+          },
+          "paths": {
+            "/postData": {
+              "post": {
+                "summary": "Send_EMS",
+                "operationId": "post_postData",
+                "parameters": [
+                  {
+                    "name": "Authorization",
+                    "in": "header",
+                    "description": "Request parameter",
+                    "required": false,
+                    "schema": {
+                      "type": "string"
+                    }
+                  }
+                ],
+                "responses": {
+                  "200": {
+                    "description": "",
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/schema1"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "Send a message to EMS",
+                "requestBody": {
+                  "description": "",
+                  "required": false,
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/schema2"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "components": {
+            "schemas": {
+              "schema1": {
+                "type": "object",
+                "properties": {
+                  "response": {
+                    "type": "string"
+                  }
+                }
+              },
+              "schema2": {
+                "type": "object",
+                "properties": {
+                  "InputMessage": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "flogoVersion": "2.25.11"
+  }
+}

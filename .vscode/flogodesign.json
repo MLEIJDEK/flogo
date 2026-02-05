@@ -1,0 +1,6 @@
+{
+  "flogo-assistant-mle-test1": {
+    "port": 3333,
+    "scope": "workspace"
+  }
+}

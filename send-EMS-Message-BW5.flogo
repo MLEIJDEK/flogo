@@ -10,7 +10,7 @@
   ],
   "name": "MLE_Send-EMS-Msg-BW5",
   "description": "",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "flogo:app",
   "appModel": "1.1.1",
   "tags": [],
@@ -79,6 +79,11 @@
               }
             },
             "output": {
+              "headers": {
+                "type": "json",
+                "value": "{\"type\":\"object\",\"properties\":{\"Accept\":{\"type\":\"string\",\"visible\":false},\"Accept-Charset\":{\"type\":\"string\",\"visible\":false},\"Accept-Encoding\":{\"type\":\"string\",\"visible\":false},\"Authorization\":{\"type\":\"string\",\"visible\":false},\"Connection\":{\"type\":\"string\",\"visible\":false},\"Content-Length\":{\"type\":\"string\",\"visible\":false},\"Content-Type\":{\"type\":\"string\",\"visible\":false},\"Cookie\":{\"type\":\"string\",\"visible\":false},\"Pragma\":{\"type\":\"string\",\"visible\":false}},\"required\":[]}",
+                "fe_metadata": "[{\"parameterName\":\"Accept\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Charset\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Accept-Encoding\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Authorization\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Connection\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Length\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Content-Type\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Cookie\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false},{\"parameterName\":\"Pragma\",\"type\":\"string\",\"repeating\":\"false\",\"required\":\"false\",\"visible\":false}]"
+              },
               "body": {
                 "type": "json",
                 "value": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"InputMessage\":{\"type\":\"string\"}}}",
@@ -349,7 +354,7 @@
       }
     }
   },
-  "contrib": "W3sicmVmIjoiZ2l0aHViLmNvbS90aWJjby9mbG9nby1nZW5lcmFsL3NyYy9hcHAvR2VuZXJhbCIsImlkIjoiR2VuZXJhbCIsInZlcnNpb24iOiIxLjYuNyIsInRhZyI6IjEuNi43LWIwMyIsIm5hbWUiOiJHZW5lcmFsIiwiczNsb2NhdGlvbiI6IlRpYmNvL0dlbmVyYWwiLCJpc1VzZXJFeHRlbnNpb24iOmZhbHNlfSx7InJlZiI6ImdpdGh1Yi5jb20vdGliY28vZmxvZ28tZW1zL3NyYy9hcHAvRU1TIiwiaWQiOiJFTVMiLCJ2ZXJzaW9uIjoiMS4wLjItSEYxIiwidGFnIjoiMS4wLjItaGYxLWIwMiIsIm5hbWUiOiJUSUJDTyBFbnRlcnByaXNlIE1lc3NhZ2UgU2VydmljZSIsInMzbG9jYXRpb24iOiJUaWJjby9FTVMiLCJpc1VzZXJFeHRlbnNpb24iOmZhbHNlfV0=",
+  "contrib": "W3sicmVmIjoiZ2l0aHViLmNvbS90aWJjby9mbG9nby1nZW5lcmFsL3NyYy9hcHAvR2VuZXJhbCIsImlkIjoiR2VuZXJhbCIsInZlcnNpb24iOiIxLjYuMTEiLCJ0YWciOiIxLjYuMTEtYjAyIiwibmFtZSI6IkdlbmVyYWwiLCJzM2xvY2F0aW9uIjoiVGliY28vR2VuZXJhbCIsImlzVXNlckV4dGVuc2lvbiI6ZmFsc2V9LHsicmVmIjoiZ2l0aHViLmNvbS90aWJjby9mbG9nby1lbXMvc3JjL2FwcC9FTVMiLCJpZCI6IkVNUyIsInZlcnNpb24iOiIxLjAuMyIsInRhZyI6IjEuMC4zLWIwMyIsIm5hbWUiOiJUSUJDTyBFbnRlcnByaXNlIE1lc3NhZ2UgU2VydmljZSIsInMzbG9jYXRpb24iOiJUaWJjby9FTVMiLCJpc1VzZXJFeHRlbnNpb24iOmZhbHNlfV0=",
   "metadata": {
     "endpoints": [
       {
@@ -372,7 +377,17 @@
               "post": {
                 "summary": "Send_EMS",
                 "operationId": "post_postData",
-                "parameters": [],
+                "parameters": [
+                  {
+                    "name": "Authorization",
+                    "in": "header",
+                    "description": "Request parameter",
+                    "required": false,
+                    "schema": {
+                      "type": "string"
+                    }
+                  }
+                ],
                 "responses": {
                   "200": {
                     "description": "",
@@ -423,6 +438,6 @@
         }
       }
     ],
-    "flogoVersion": "2.25.7"
+    "flogoVersion": "2.25.11"
   }
 }

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude mcp add FLOGO:DesignAssistant --http http://localhost:3333/mcp -- npx)",
+      "Bash(claude mcp add:*)",
+      "mcp__FLOGO-DesignAssistant__validate",
+      "mcp__FLOGO-DesignAssistant__describe-attributes",
+      "mcp__FLOGO-DesignAssistant__describe-project"
+    ]
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "imports": [
+    "github.com/project-flogo/flow",
+    "act_default_noop github.com/project-flogo/contrib/activity/noop",
+    "act_general_mapper github.com/tibco/flogo-general/src/app/General/activity/mapper",
+    "act_general_sendmail github.com/tibco/flogo-general/src/app/General/activity/sendmail",
+    "tr_rest github.com/tibco/flogo-general/src/app/General/trigger/rest"
+  ],
+  "name": "SalesOrderProcess",
+  "description": "Sales Order Processing Application - Receives orders, validates data, creates sales orders, and sends confirmation emails",
+  "version": "1.0.0",
+  "type": "flogo:app",
+  "appModel": "1.1.1",
+  "tags": [],
+  "triggers": [
+    {
+      "settings": {
+        "port": 9999,
+        "APISpecUpdate": false,
+        "swagger": "",
+        "swaggerVersion": "v2",
+        "apiVersion": "1.0.0",
+        "secureConnection": false,
+        "serverKey": "",
+        "caCertificate": ""
+      },
+      "id": "ReceiveOrder",
+      "name": "ReceiveOrder",
+      "description": "REST endpoint to receive incoming sales orders",
+      "ref": "#tr_rest",
+      "handlers": [
+        {
+          "settings": {
+            "APISpecPath": "",
+            "Method": "POST",
+            "reqType": "application/json",
+            "Path": "/orders",
+            "OutputValidation": false
+          },
+          "action": {
+            "input": {},
+            "output": {},
+            "ref": "github.com/project-flogo/flow",
+            "settings": {
+              "flowURI": "res://flow:SalesOrderFlow"
+            }
+          },
+          "reply": {
+            "code": 0,
+            "configureResponseCodes": false,
+            "data": {},
+            "responseBody": {},
+            "responseCodesSchema": {},
+            "message": ""
+          },
+          "name": "SalesOrderFlow",
+          "description": "Handler for receiving sales order requests"
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "id": "flow:SalesOrderFlow",
+      "data": {
+        "name": "SalesOrderFlow",
+        "description": "Main flow for processing sales orders - validates order and customer data, creates the sales order, and sends confirmation",
+        "links": [
+          {
+            "id": 1,
+            "from": "StartActivity",
+            "to": "VerifyOrderData",
+            "type": "label",
+            "label": "StartActivity to VerifyOrderData"
+          },
+          {
+            "id": 2,
+            "from": "VerifyOrderData",
+            "to": "VerifyCustomerData",
+            "type": "label",
+            "label": "VerifyOrderData to VerifyCustomerData"
+          },
+          {
+            "id": 3,
+            "from": "VerifyCustomerData",
+            "to": "CreateSalesOrder",
+            "type": "label",
+            "label": "VerifyCustomerData to CreateSalesOrder"
+          },
+          {
+            "id": 4,
+            "from": "CreateSalesOrder",
+            "to": "SendConfirmationEmail",
+            "type": "label",
+            "label": "CreateSalesOrder to SendConfirmationEmail"
+          }
+        ],
+        "tasks": [
+          {
+            "id": "StartActivity",
+            "name": "StartActivity",
+            "description": "NoOp Activity",
+            "activity": {
+              "ref": "#act_default_noop"
+            }
+          },
+          {
+            "activity": {
+              "input": {
+                "input": {}
+              },
+              "ref": "#act_general_mapper"
+            },
+            "id": "VerifyOrderData",
+            "name": "VerifyOrderData",
+            "description": "Validates the incoming order data for completeness and correctness"
+          },
+          {
+            "activity": {
+              "input": {
+                "input": {}
+              },
+              "ref": "#act_general_mapper"
+            },
+            "id": "VerifyCustomerData",
+            "name": "VerifyCustomerData",
+            "description": "Validates the customer information associated with the order"
+          },
+          {
+            "activity": {
+              "input": {
+                "input": {}
+              },
+              "ref": "#act_general_mapper"
+            },
+            "id": "CreateSalesOrder",
+            "name": "CreateSalesOrder",
+            "description": "Creates the sales order record in the system"
+          },
+          {
+            "activity": {
+              "input": {
+                "Server": "",
+                "Port": 0,
+                "authorizationType": "Basic",
+                "Username": "",
+                "Password": "",
+                "authorizationConn": "",
+                "Connection Security": "TLS",
+                "serverCertificate": "",
+                "message_content_type": "",
+                "sender": "",
+                "recipients": "",
+                "cc_recipients": "",
+                "bcc_recipients": "",
+                "reply_to": "",
+                "subject": "",
+                "message": "",
+                "attachments": [],
+                "headers": []
+              },
+              "ref": "#act_general_sendmail"
+            },
+            "id": "SendConfirmationEmail",
+            "name": "SendConfirmationEmail",
+            "description": "Sends a confirmation email to the customer after the sales order is created"
+          }
+        ],
+        "fe_metadata": "eyJTdGFydEFjdGl2aXR5Ijp7IngiOjUwLCJ5Ijo0NX0sIlZlcmlmeU9yZGVyRGF0YSI6eyJ4IjoyNTAsInkiOjQ1fSwiVmVyaWZ5Q3VzdG9tZXJEYXRhIjp7IngiOjQ1MCwieSI6NDV9LCJDcmVhdGVTYWxlc09yZGVyIjp7IngiOjY1MCwieSI6NDV9LCJTZW5kQ29uZmlybWF0aW9uRW1haWwiOnsieCI6ODUwLCJ5Ijo0NX19",
+        "metadata": {
+          "input": [],
+          "output": [],
+          "fe_metadata": {}
+        }
+      }
+    }
+  ],
+  "properties": [],
+  "connections": {},
+  "contrib": "W3sicmVmIjoiZ2l0aHViLmNvbS90aWJjby9mbG9nby1nZW5lcmFsL3NyYy9hcHAvR2VuZXJhbCIsImlkIjoiR2VuZXJhbCIsInZlcnNpb24iOiIxLjYuMTEiLCJ0YWciOiIxLjYuMTEtYjAyIiwibmFtZSI6IlRJQkNPIEZsb2dvIENvbm5lY3RvciBmb3IgR2VuZXJhbCIsInMzbG9jYXRpb24iOiJUaWJjby9HZW5lcmFsIiwiaXNVc2VyRXh0ZW5zaW9uIjpmYWxzZX1d",
+  "metadata": {
+    "endpoints": [],
+    "flogoVersion": "2.25.6"
+  }
+}

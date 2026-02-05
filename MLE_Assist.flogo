@@ -1,0 +1,18 @@
+{
+  "imports": [],
+  "name": "MLE_Assist",
+  "description": "Machine Learning Engine Assistant application",
+  "version": "1.0.0",
+  "type": "flogo:app",
+  "appModel": "1.1.1",
+  "tags": [],
+  "triggers": [],
+  "resources": [],
+  "properties": [],
+  "connections": {},
+  "contrib": "",
+  "metadata": {
+    "endpoints": [],
+    "flogoVersion": "2.25.6"
+  }
+}

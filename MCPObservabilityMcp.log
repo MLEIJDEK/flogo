@@ -1,0 +1,38 @@
+2026-01-30 09:12:24.386 [info] Starting server ObservabilityMcp
+2026-01-30 09:12:24.386 [info] Connection state: Starting
+2026-01-30 09:12:24.386 [info] Starting server from LocalProcess extension host
+2026-01-30 09:12:24.387 [info] Connection state: Running
+2026-01-30 09:12:24.751 [info] Connection state: Error 400 status sending message to https://tibcoatseuwe1.eu-west.my.tibco.com/o11y/mcp: Bad Request: No valid session ID provided; will retry with new session ID
+2026-01-30 09:13:08.077 [info] Starting server ObservabilityMcp
+2026-01-30 09:13:08.079 [info] Connection state: Starting
+2026-01-30 09:13:08.079 [info] Starting server from LocalProcess extension host
+2026-01-30 09:13:08.079 [info] Connection state: Running
+2026-01-30 09:13:08.079 [debug] [editor -> server] {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{"roots":{"listChanged":true},"sampling":{},"elicitation":{"form":{},"url":{}},"tasks":{"list":{},"cancel":{},"requests":{"sampling":{"createMessage":{}},"elicitation":{"create":{}}}}},"clientInfo":{"name":"Visual Studio Code","version":"1.108.2"}}}
+2026-01-30 09:13:08.227 [debug] [server -> editor] {"jsonrpc":"2.0","id":1,"result":{"protocolVersion":"2025-06-18","capabilities":{"experimental":{},"prompts":{"listChanged":true},"resources":{"subscribe":false,"listChanged":true},"tools":{"listChanged":true}},"serverInfo":{"name":"Platform Observability MCP Server","version":"2.13.0.2"}}}
+2026-01-30 09:13:08.228 [debug] [editor -> server] {"method":"notifications/initialized","jsonrpc":"2.0"}
+2026-01-30 09:13:08.228 [debug] [editor -> server] {"jsonrpc":"2.0","id":2,"method":"prompts/list","params":{}}
+2026-01-30 09:13:08.228 [debug] [editor -> server] {"jsonrpc":"2.0","id":3,"method":"tools/list","params":{}}
+2026-01-30 09:13:08.276 [debug] 400 status connecting to https://tibcoatseuwe1.eu-west.my.tibco.com/o11y/mcp for async notifications; they will be disabled: Bad Request: No valid session ID provided
+2026-01-30 09:13:08.372 [info] Connection state: Error 400 status sending message to https://tibcoatseuwe1.eu-west.my.tibco.com/o11y/mcp: Bad Request: No valid session ID provided; will retry with new session ID
+2026-01-30 09:15:36.010 [info] Starting server ObservabilityMcp
+2026-01-30 09:15:36.010 [info] Connection state: Starting
+2026-01-30 09:15:36.013 [info] Starting server from LocalProcess extension host
+2026-01-30 09:15:36.013 [info] Connection state: Running
+2026-01-30 09:15:36.014 [debug] [editor -> server] {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{"roots":{"listChanged":true},"sampling":{},"elicitation":{"form":{},"url":{}},"tasks":{"list":{},"cancel":{},"requests":{"sampling":{"createMessage":{}},"elicitation":{"create":{}}}}},"clientInfo":{"name":"Visual Studio Code","version":"1.108.2"}}}
+2026-01-30 09:15:36.161 [debug] [server -> editor] {"jsonrpc":"2.0","id":1,"result":{"protocolVersion":"2025-06-18","capabilities":{"experimental":{},"prompts":{"listChanged":true},"resources":{"subscribe":false,"listChanged":true},"tools":{"listChanged":true}},"serverInfo":{"name":"Platform Observability MCP Server","version":"2.13.0.2"}}}
+2026-01-30 09:15:36.161 [debug] [editor -> server] {"method":"notifications/initialized","jsonrpc":"2.0"}
+2026-01-30 09:15:36.161 [debug] [editor -> server] {"jsonrpc":"2.0","id":2,"method":"prompts/list","params":{}}
+2026-01-30 09:15:36.161 [debug] [editor -> server] {"jsonrpc":"2.0","id":3,"method":"tools/list","params":{}}
+2026-01-30 09:15:36.162 [debug] [editor -> server] {"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"create_dashboard","arguments":{"request":{"name":"MLE_test2","capability":"bwce","data_plane_id":"cq1duk2jcp26pefl1d60","time_slot":"48h"}},"_meta":{"progressToken":"8956f611-b5ee-4b1a-bf6d-4b2c19eeb807","vscode.conversationId":"25f4559d-f3e6-4629-b442-b69f87e83754","vscode.requestId":"f3491baf-a7f9-4e47-bbac-b009c6895929"}}}
+2026-01-30 09:15:36.309 [info] Connection state: Error 400 status sending message to https://tibcoatseuwe1.eu-west.my.tibco.com/o11y/mcp: Bad Request: No valid session ID provided; will retry with new session ID
+2026-01-30 09:15:36.313 [info] Starting server ObservabilityMcp
+2026-01-30 09:15:36.313 [info] Connection state: Starting
+2026-01-30 09:15:36.313 [info] Starting server from LocalProcess extension host
+2026-01-30 09:15:36.313 [info] Connection state: Running
+2026-01-30 09:15:36.313 [debug] [editor -> server] {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{"roots":{"listChanged":true},"sampling":{},"elicitation":{"form":{},"url":{}},"tasks":{"list":{},"cancel":{},"requests":{"sampling":{"createMessage":{}},"elicitation":{"create":{}}}}},"clientInfo":{"name":"Visual Studio Code","version":"1.108.2"}}}
+2026-01-30 09:15:36.363 [debug] [server -> editor] {"jsonrpc":"2.0","id":1,"result":{"protocolVersion":"2025-06-18","capabilities":{"experimental":{},"prompts":{"listChanged":true},"resources":{"subscribe":false,"listChanged":true},"tools":{"listChanged":true}},"serverInfo":{"name":"Platform Observability MCP Server","version":"2.13.0.2"}}}
+2026-01-30 09:15:36.363 [debug] [editor -> server] {"method":"notifications/initialized","jsonrpc":"2.0"}
+2026-01-30 09:15:36.363 [debug] [editor -> server] {"jsonrpc":"2.0","id":2,"method":"prompts/list","params":{}}
+2026-01-30 09:15:36.363 [debug] [editor -> server] {"jsonrpc":"2.0","id":3,"method":"tools/list","params":{}}
+2026-01-30 09:15:36.363 [debug] [editor -> server] {"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"create_dashboard","arguments":{"request":{"name":"MLE_test2","capability":"bwce","data_plane_id":"cq1duk2jcp26pefl1d60","time_slot":"48h"}},"_meta":{"progressToken":"e6204251-d66d-4652-9e79-241553178aaf","vscode.conversationId":"25f4559d-f3e6-4629-b442-b69f87e83754","vscode.requestId":"f3491baf-a7f9-4e47-bbac-b009c6895929"}}}
+2026-01-30 09:15:36.418 [info] Connection state: Error 400 status sending message to https://tibcoatseuwe1.eu-west.my.tibco.com/o11y/mcp: Bad Request: No valid session ID provided; will retry with new session ID

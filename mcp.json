@@ -1,0 +1,30 @@
+{
+    "ControlPlaneMcp": {
+        "url": "https://tibcoatseuwe1.eu-west.my.tibco.com/cp/mcp",
+        "type": "http",
+        "headers": {
+            "Authorization": "Bearer CIC~4PrIITcnNKF9cGL5QWqpTSlS"
+        }
+    },
+    "ObservabilityMcp": {
+        "url": "https://tibcoatseuwe1.eu-west.my.tibco.com/o11y/mcp",
+        "type": "http",
+        "headers": {
+            "Authorization": "Bearer CIC~4PrIITcnNKF9cGL5QWqpTSlS"
+        }
+    },
+    "FlogoCapabilityMcp": {
+        "url": "https://tibcoatseuwe1.eu-west.my.tibco.com/flogo/mcp",
+        "type": "http",
+        "headers": {
+            "Authorization": "Bearer CIC~4PrIITcnNKF9cGL5QWqpTSlS"
+        }
+    },
+    "BWCapabilityMcp": {
+        "url": "https://tibcoatseuwe1.eu-west.my.tibco.com/bw/mcp",
+        "type": "http",
+        "headers": {
+            "Authorization": "Bearer CIC~4PrIITcnNKF9cGL5QWqpTSlS"
+        }
+    }
+}
