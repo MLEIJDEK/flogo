@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: mftuser4
+  description: MFT user
+  tags:
+    - mft
+  annotations:
+    github.com/project-slug: https://github.com/MLEIJDEK/flogo
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: mft
+  lifecycle: development
+  owner: user:default/michel.leijdekker
+  memberOf:
+    - group:default/b2b
