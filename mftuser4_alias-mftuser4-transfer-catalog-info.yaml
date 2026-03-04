@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: mftuser4_alias-mftuser4
+  description: Transfer definition
+  tags:
+    - mft
+    - transfer
+spec:
+  type: is-transfer
+  lifecycle: development
+  owner: group:default/b2b
+  system: mft-b2b-system
